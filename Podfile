@@ -8,6 +8,7 @@ target 'AirLift' do
   # Pods for AirLift
     pod 'Firebase/Core'
     pod 'Firebase/Database'
+    pod 'Firebase/Auth'
 
 
   target 'AirLiftTests' do

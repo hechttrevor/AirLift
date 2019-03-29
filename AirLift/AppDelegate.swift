@@ -18,16 +18,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         FirebaseApp.configure()
-        //Set Table View to main screen
-        window = UIWindow()
-        window?.makeKeyAndVisible()
-
-        //Set up Nav Controller
-        let navController = UINavigationController(rootViewController: TableViewController_Home())
         
-        //navController.navigationBar.barTintColor = UIColor.cyan;
-        window?.rootViewController = navController
         
+//        //Set Table View to main screen
+//        window = UIWindow()
+//        window?.makeKeyAndVisible()
+//
+//        //Set up Nav Controller
+//        let navController = UINavigationController(rootViewController: TableViewController_Home())
+//        
+//
+//        window?.rootViewController = navController
+//        
         
         return true
     }
@@ -53,6 +55,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
+    
+
 
 
 }

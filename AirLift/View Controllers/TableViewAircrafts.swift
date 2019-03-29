@@ -1,15 +1,15 @@
 //
-//  TableViewController_Home.swift
+//  TableViewAircrafts.swift
 //  AirLift
 //
-//  Created by Trevor Hecht on 3/27/19.
+//  Created by Trevor Hecht on 3/28/19.
 //  Copyright © 2019 Trevor Hecht. All rights reserved.
 //
 
 import UIKit
 import FirebaseDatabase
 
-class TableViewController_Home: UITableViewController {
+class TableViewAircrafts: UITableViewController {
 
     let backgroundImageView = UIImageView()
     var ref : DatabaseReference!
@@ -35,7 +35,7 @@ class TableViewController_Home: UITableViewController {
         //Sets a top right button
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Show Common Name", style: .plain, target: self, action: #selector(handleShowAttribute))
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cellId")
-
+        
     }
     
     // fetch data from firebase database
@@ -78,6 +78,7 @@ class TableViewController_Home: UITableViewController {
         //        })
     }
     
+    // On click Back function
     
     //  On click Show Attribute function
     @objc func handleShowAttribute(){
@@ -99,15 +100,15 @@ class TableViewController_Home: UITableViewController {
     
     
     // CODE FOR HEADERS *****************************************************************************************
-//    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        let label = UILabel()
-//        label.text = "Header"
-//        label.backgroundColor = UIColor.lightGray
-//        return label
-//    }
-//    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-//        return 36
-//    }
+    //    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    //        let label = UILabel()
+    //        label.text = "Header"
+    //        label.backgroundColor = UIColor.lightGray
+    //        return label
+    //    }
+    //    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    //        return 36
+    //    }
     //******************************************************************************************************
     
     
@@ -172,12 +173,11 @@ class TableViewController_Home: UITableViewController {
     //ALERT for onClick cell
     func showAlertYesNo(title : String, message: String, row: Int){
         let refreshAlert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
-        
         //Click OK
         refreshAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction!) in
             //Open Segue with Aircraft Data
-            TableViewController_Home.baseballCard = self.aircraftArray[row]
-            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "vcInfo") as? ViewControllerAircraftInfo {
+            TableViewAircrafts.baseballCard = self.aircraftArray[row]
+            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "vcInfo") as? ViewControllerInfoCard {
                 //ViewControllerAircraftInfo.aircraft = self.aircraftArray[row]
                 self.present(vc, animated: true, completion: nil)
             }
@@ -189,19 +189,53 @@ class TableViewController_Home: UITableViewController {
     }
     
     func setBackground(){
-//        navigationItem.title = "AirLift"
-//        navigationController?.navigationBar.prefersLargeTitles = true
-        let label = UILabel()
+        //title stuff
+        //        navigationItem.title = "AirLift"
+        //        navigationController?.navigationBar.prefersLargeTitles = true
+        //       let label = UILabel()
         //label.textColor = UIColor.white
-        label.text = "Model Number"
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: label)
+        //label.text = "Model Number"
+        //self.navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: label)
         
+        
+//        var backButtonView = UIView()
+//        let backButtonImage = UIImage(named: "BackButton")
+//
+//        navigationItem.backBarButtonItem = UIBarButtonItem.init(customView: backButtonView)
+        
+     
+//        self.navigationController?.navigationBar.backIndicatorImage = UIImage(named: "BackButton")
+//
+
+        
+
+
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "back", style: .plain, target: self, action: #selector(sendBack))
+        
+        UIBarButtonItem(image: UIImage(named: "BackButton"), style: .plain, target: self, action: Selector(("back")))
         
         navigationController?.navigationBar.backgroundColor = UIColor(red: 0/255, green: 90/255, blue: 200/255, alpha: 1)
-            //navigationController?.navigationBar.setBackgroundImage(UIImage(named: "RescueBackground1"), for: .default)
+        
         tableView.backgroundColor = UIColor.clear
         backgroundImageView.image = UIImage(named: "Background1")
         tableView.backgroundView = backgroundImageView
     }
     
+//    extension UIImage {
+//        convenience init(view: UIView) {
+//            UIGraphicsBeginImageContext(view.frame.size)
+//            view.layer.render(in:UIGraphicsGetCurrentContext()!)
+//            let image = UIGraphicsGetImageFromCurrentImageContext()
+//            UIGraphicsEndImageContext()
+//            self.init(cgImage: image!.cgImage!)
+//        }
+//    }
+    
+    @objc func sendBack(){
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "vcHome") as? ViewControllerHomePage {
+            self.present(vc, animated: true, completion: nil)
+        }
+    }
+
 }

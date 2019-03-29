@@ -15,8 +15,12 @@
 		260D4236224C2AB9008B8AC4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 260D4235224C2AB9008B8AC4 /* GoogleService-Info.plist */; };
 		260D4239224C2BF3008B8AC4 /* RoundButtonMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260D4238224C2BF3008B8AC4 /* RoundButtonMain.swift */; };
 		260D4244224C2C11008B8AC4 /* Aircraft.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260D4243224C2C11008B8AC4 /* Aircraft.swift */; };
-		260D4246224C2CBD008B8AC4 /* TableViewController_Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260D4245224C2CBD008B8AC4 /* TableViewController_Home.swift */; };
-		260D4249224C364A008B8AC4 /* ViewControllerAircraftInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260D4248224C364A008B8AC4 /* ViewControllerAircraftInfo.swift */; };
+		260D4249224C364A008B8AC4 /* ViewControllerInfoCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260D4248224C364A008B8AC4 /* ViewControllerInfoCard.swift */; };
+		260D424B224D775C008B8AC4 /* ViewControllerLogIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260D424A224D775C008B8AC4 /* ViewControllerLogIn.swift */; };
+		260D424D224D776D008B8AC4 /* ViewControllerSignIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260D424C224D776D008B8AC4 /* ViewControllerSignIn.swift */; };
+		260D424F224D7B07008B8AC4 /* TextFieldLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260D424E224D7B07008B8AC4 /* TextFieldLogin.swift */; };
+		260D4251224DA230008B8AC4 /* ViewControllerHomePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260D4250224DA230008B8AC4 /* ViewControllerHomePage.swift */; };
+		260D4253224DB4AF008B8AC4 /* TableViewAircrafts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260D4252224DB4AF008B8AC4 /* TableViewAircrafts.swift */; };
 		746270514C1DBCE9473235BA /* Pods_AirLiftTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 234C961E677D725BE85091C3 /* Pods_AirLiftTests.framework */; };
 		AB540E5A30F6DC8493E6EEC7 /* Pods_AirLift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A1573C2EF44B3A3BC7276D2 /* Pods_AirLift.framework */; };
 /* End PBXBuildFile section */
@@ -48,8 +52,12 @@
 		260D4235224C2AB9008B8AC4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		260D4238224C2BF3008B8AC4 /* RoundButtonMain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundButtonMain.swift; sourceTree = "<group>"; };
 		260D4243224C2C11008B8AC4 /* Aircraft.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Aircraft.swift; sourceTree = "<group>"; };
-		260D4245224C2CBD008B8AC4 /* TableViewController_Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController_Home.swift; sourceTree = "<group>"; };
-		260D4248224C364A008B8AC4 /* ViewControllerAircraftInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerAircraftInfo.swift; sourceTree = "<group>"; };
+		260D4248224C364A008B8AC4 /* ViewControllerInfoCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerInfoCard.swift; sourceTree = "<group>"; };
+		260D424A224D775C008B8AC4 /* ViewControllerLogIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerLogIn.swift; sourceTree = "<group>"; };
+		260D424C224D776D008B8AC4 /* ViewControllerSignIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerSignIn.swift; sourceTree = "<group>"; };
+		260D424E224D7B07008B8AC4 /* TextFieldLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldLogin.swift; sourceTree = "<group>"; };
+		260D4250224DA230008B8AC4 /* ViewControllerHomePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerHomePage.swift; sourceTree = "<group>"; };
+		260D4252224DB4AF008B8AC4 /* TableViewAircrafts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewAircrafts.swift; sourceTree = "<group>"; };
 		35276002AE3879719B3597BA /* Pods-AirLiftTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AirLiftTests.debug.xcconfig"; path = "Target Support Files/Pods-AirLiftTests/Pods-AirLiftTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5541C010D5FF0A4A28C88384 /* Pods-AirLiftTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AirLiftTests.release.xcconfig"; path = "Target Support Files/Pods-AirLiftTests/Pods-AirLiftTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -123,6 +131,7 @@
 			isa = PBXGroup;
 			children = (
 				260D4238224C2BF3008B8AC4 /* RoundButtonMain.swift */,
+				260D424E224D7B07008B8AC4 /* TextFieldLogin.swift */,
 			);
 			path = "Custom Views";
 			sourceTree = "<group>";
@@ -130,8 +139,11 @@
 		260D4247224C3625008B8AC4 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				260D4245224C2CBD008B8AC4 /* TableViewController_Home.swift */,
-				260D4248224C364A008B8AC4 /* ViewControllerAircraftInfo.swift */,
+				260D4252224DB4AF008B8AC4 /* TableViewAircrafts.swift */,
+				260D4248224C364A008B8AC4 /* ViewControllerInfoCard.swift */,
+				260D424A224D775C008B8AC4 /* ViewControllerLogIn.swift */,
+				260D424C224D776D008B8AC4 /* ViewControllerSignIn.swift */,
+				260D4250224DA230008B8AC4 /* ViewControllerHomePage.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -310,6 +322,7 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AirLift/Pods-AirLift-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
@@ -318,6 +331,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
@@ -334,9 +348,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				260D4246224C2CBD008B8AC4 /* TableViewController_Home.swift in Sources */,
-				260D4249224C364A008B8AC4 /* ViewControllerAircraftInfo.swift in Sources */,
+				260D4253224DB4AF008B8AC4 /* TableViewAircrafts.swift in Sources */,
+				260D424F224D7B07008B8AC4 /* TextFieldLogin.swift in Sources */,
+				260D4249224C364A008B8AC4 /* ViewControllerInfoCard.swift in Sources */,
+				260D4251224DA230008B8AC4 /* ViewControllerHomePage.swift in Sources */,
+				260D424B224D775C008B8AC4 /* ViewControllerLogIn.swift in Sources */,
 				260D4239224C2BF3008B8AC4 /* RoundButtonMain.swift in Sources */,
+				260D424D224D776D008B8AC4 /* ViewControllerSignIn.swift in Sources */,
 				260D4244224C2C11008B8AC4 /* Aircraft.swift in Sources */,
 				260D4216224C2A59008B8AC4 /* AppDelegate.swift in Sources */,
 			);

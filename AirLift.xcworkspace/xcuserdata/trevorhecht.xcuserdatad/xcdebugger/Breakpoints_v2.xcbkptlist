@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AirLift/View Controllers/TableViewController_Home.swift"
-            timestampString = "575496372.766047"
+            timestampString = "575518067.068573"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "177"
-            endingLineNumber = "177"
+            startingLineNumber = "176"
+            endingLineNumber = "176"
             landmarkName = "showAlertYesNo(title:message:row:)"
             landmarkType = "7">
          </BreakpointContent>

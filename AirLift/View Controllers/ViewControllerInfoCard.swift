@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewControllerAircraftInfo: UIViewController {
+class ViewControllerInfoCard: UIViewController {
 
     @IBOutlet weak var modelNumber: UILabel!
     @IBOutlet weak var commonName: UILabel!
@@ -19,7 +19,7 @@ class ViewControllerAircraftInfo: UIViewController {
     
     
     
-    let aircraft = TableViewController_Home.baseballCard
+    let aircraft = TableViewAircrafts.baseballCard
     
     override func viewDidLoad() {
         super.viewDidLoad()
