@@ -16,7 +16,10 @@ class ViewControllerInfoCard: UIViewController {
     @IBOutlet weak var cruiseSpeed: UILabel!
     @IBOutlet weak var maxSpeed: UILabel!
     @IBOutlet weak var aircraftPhoto: UIImageView!
+    var image : UIImage!
     
+    var dataTask: URLSessionDataTask?
+    let defaultSession = URLSession(configuration: .default)
     
     
     let aircraft = TableViewAircrafts.baseballCard
@@ -28,10 +31,29 @@ class ViewControllerInfoCard: UIViewController {
     }
     
     func setImage(){
-        //aircraftPhoto.translatesAutoresizingMaskIntoConstraints = false
-        aircraftPhoto.image = UIImage(named: "\(aircraft!.modelNumber)")
-        aircraftPhoto.translatesAutoresizingMaskIntoConstraints = true
         
+        dataTask?.cancel()
+        if let photoUrl = aircraft?.photoURL{
+            if photoUrl == "" {return}
+            let url = URL(string: photoUrl)
+            //Take link from database, then set it to the Aircraft photo
+            dataTask = defaultSession.dataTask(with: url!, completionHandler: { (data, response, error) in
+                if error != nil {
+                    print(error)
+                    return
+                }
+                //succesfully found the link
+                DispatchQueue.main.async {
+                    self.aircraftPhoto.translatesAutoresizingMaskIntoConstraints = true
+                    self.aircraftPhoto.image = UIImage(data: data!)
+                }
+         })
+             dataTask?.resume()
+        }
+        //CODE TO FETCH PHOTO FROM ASSET FILE
+//        aircraftPhoto.image = UIImage(named: "\(aircraft!.modelNumber)")
+//        aircraftPhoto.translatesAutoresizingMaskIntoConstraints = true
+//
     }
     
     func setLabelsText(){
@@ -47,5 +69,7 @@ class ViewControllerInfoCard: UIViewController {
     @IBAction func closeView(_ sender: Any) {
     self.presentingViewController?.dismiss(animated: true, completion: nil)
     }
+    
+
 
 }

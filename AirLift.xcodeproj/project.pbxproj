@@ -108,8 +108,8 @@
 			children = (
 				260D4237224C2BF3008B8AC4 /* Custom Views */,
 				260D4215224C2A59008B8AC4 /* AppDelegate.swift */,
-				260D4247224C3625008B8AC4 /* View Controllers */,
 				260D4243224C2C11008B8AC4 /* Aircraft.swift */,
+				260D4247224C3625008B8AC4 /* View Controllers */,
 				260D4219224C2A59008B8AC4 /* Main.storyboard */,
 				260D421C224C2A5C008B8AC4 /* Assets.xcassets */,
 				260D421E224C2A5C008B8AC4 /* LaunchScreen.storyboard */,

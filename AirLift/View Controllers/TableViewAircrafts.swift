@@ -40,21 +40,23 @@ class TableViewAircrafts: UITableViewController {
     
     // fetch data from firebase database
     func getData(){
-        
         ref = Database.database().reference()
         ref.child("ModelNumbers").observeSingleEvent(of: .value, with: { (snapshot) in
             for child in snapshot.children {
                 let snap = child as! DataSnapshot
-                self.twoDimensionalArray[0].append(snap.key)
+                
+                let modelNumber = snap.key
+                self.twoDimensionalArray[0].append(modelNumber)
                 self.tableView.reloadData()
                 
-                
-                //Try to convert all the data to a String or Double
+                //Collects data from firebase, fill array of aircrafts
                 let snapValues = snap.value as? NSDictionary
+                
+                let inFlightRefuel = snapValues?["inFlightRefuel"] as? Bool ?? false
                 
                 let commonName = snapValues?["commonName"] as? String ?? ""
                 let otherName = snapValues?["otherName"] as? String ?? ""
-                
+                let photoURL =  snapValues?["photo"] as? String ?? ""
                 
                 let cruiseSpeed = snapValues?["cruiseSpeed"]as? Double ?? 0
                 let maxSpeed = snapValues?["maxSpeed"] as? Double ?? 0
@@ -62,10 +64,20 @@ class TableViewAircrafts: UITableViewController {
                 let maxRangeExt = snapValues?["maxRangeExt"] as? Double ?? 0
                 let maxLoad = snapValues?["maxLoad"] as? Double ?? 0
                 let minCrew = snapValues?["minCrew"] as? Double ?? 0
-                let maxCrew = snapValues?["maxCrew"] as? Double ?? 0
+                let maxCrew = snapValues?["maxCrew"] as? Double ?? minCrew
+                let paxSeatedMin = snapValues?["paxSeatedMin"] as? Double ?? 0
+                let paxSeatedMax = snapValues?["paxSeatedMax"] as? Double ?? paxSeatedMin
+                let paxLitters = snapValues?["paxLitters"] as? Double ?? 0
+                let slingloadCapacity = snapValues?["slingloadCapacity"] as? Double ?? 0
+                let internalFuel = snapValues?["internalFuel"] as? Double ?? 0
+                let serviceCeiling = snapValues?["serviceCeiling"] as? Double ?? 0
+                let takeoffRunway = snapValues?["takeoffRunway"] as? Double ?? 0
+                let landingRunway = snapValues?["landingRunway"] as? Double ?? 0
                 
+                
+            
                 //Add each element of each child to Aircraft array
-                self.aircraftArray.append(Aircraft.init(modelNumber: snap.key, commonName: commonName,otherName: otherName, cruiseSpeed: cruiseSpeed, maxSpeed: maxSpeed, maxRangeInt: maxRangeInt, maxRangeExt: maxRangeExt, maxLoad: maxLoad, minCrew: minCrew, maxCrew: maxCrew))
+                self.aircraftArray.append(Aircraft.init(modelNumber: modelNumber, commonName: commonName,otherName: otherName, cruiseSpeed: cruiseSpeed, maxSpeed: maxSpeed, maxRangeInt: maxRangeInt, maxRangeExt: maxRangeExt, maxLoad: maxLoad, crew: minCrew...maxCrew, paxSeated: paxSeatedMin...paxSeatedMax, paxLitters: paxLitters, slingloadCapacity: slingloadCapacity, internalFuel: internalFuel, serviceCeiling: serviceCeiling, inFlightRefuel: inFlightRefuel, takeoffRunway: takeoffRunway, landingRunway: landingRunway, photoURL: photoURL))
             }
         }) { (error) in
             print(error.localizedDescription)
@@ -190,30 +202,21 @@ class TableViewAircrafts: UITableViewController {
     
     func setBackground(){
         //title stuff
-        //        navigationItem.title = "AirLift"
-        //        navigationController?.navigationBar.prefersLargeTitles = true
+               navigationItem.title = "AirLift"
+              navigationController?.navigationBar.prefersLargeTitles = true
         //       let label = UILabel()
         //label.textColor = UIColor.white
         //label.text = "Model Number"
         //self.navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: label)
         
         
-//        var backButtonView = UIView()
-//        let backButtonImage = UIImage(named: "BackButton")
-//
-//        navigationItem.backBarButtonItem = UIBarButtonItem.init(customView: backButtonView)
-        
-     
-//        self.navigationController?.navigationBar.backIndicatorImage = UIImage(named: "BackButton")
-//
-
-        
-
-
-        
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "back", style: .plain, target: self, action: #selector(sendBack))
         
-        UIBarButtonItem(image: UIImage(named: "BackButton"), style: .plain, target: self, action: Selector(("back")))
+        
+//        let backButton = UIImage(named: "BackButton")
+//        let myInsets = UIEdgeInsets(top: 0.1, left: 0.1, bottom: 0.1, right: 0.1)
+//        backButton?.resizableImage(withCapInsets: myInsets)
+//        navigationItem.leftBarButtonItem = UIBarButtonItem(image: backButton, style: .plain, target: self, action: #selector(sendBack))
         
         navigationController?.navigationBar.backgroundColor = UIColor(red: 0/255, green: 90/255, blue: 200/255, alpha: 1)
         
@@ -222,15 +225,7 @@ class TableViewAircrafts: UITableViewController {
         tableView.backgroundView = backgroundImageView
     }
     
-//    extension UIImage {
-//        convenience init(view: UIView) {
-//            UIGraphicsBeginImageContext(view.frame.size)
-//            view.layer.render(in:UIGraphicsGetCurrentContext()!)
-//            let image = UIGraphicsGetImageFromCurrentImageContext()
-//            UIGraphicsEndImageContext()
-//            self.init(cgImage: image!.cgImage!)
-//        }
-//    }
+
     
     @objc func sendBack(){
         if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "vcHome") as? ViewControllerHomePage {

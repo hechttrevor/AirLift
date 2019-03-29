@@ -15,16 +15,30 @@ class Aircraft: NSObject { //modelNumber, commonName, otherName, cruiseSpeed, ma
     let modelNumber: String
     let commonName: String
     let otherName: String
+    let photoURL: String?
+    
     let cruiseSpeed: Double
     let maxSpeed: Double
     let maxRangeInt: Double
     let maxRangeExt: Double
     let maxLoad: Double
-    let minCrew: Double
-    let maxCrew: Double
-     // STILL NEED TO ADD:  , paxSeated, paxLitters, slingloadCapacity, internalFuel, serviceCeiling, inFlightRefuel, runwayLength
+    let paxLitters: Double
+    let slingloadCapacity: Double
+    let internalFuel: Double
+    let serviceCeiling: Double
+    let takeoffRunway: Double
+    let landingRunway: Double
+
+    let crew: ClosedRange<Double>
+    let paxSeated: ClosedRange<Double> // closed ranges have 3 dots between values a...b
     
-    init(modelNumber: String, commonName: String, otherName: String, cruiseSpeed:Double, maxSpeed: Double, maxRangeInt: Double, maxRangeExt: Double, maxLoad: Double, minCrew: Double, maxCrew: Double) {
+    let inFlightRefuel: Bool
+    
+    
+    
+    // STILL NEED TO ADD:  , paxSeated, paxLitters, slingloadCapacity, internalFuel, serviceCeiling, inFlightRefuel, runwayLength
+    
+    init(modelNumber: String, commonName: String, otherName: String, cruiseSpeed:Double, maxSpeed: Double, maxRangeInt: Double, maxRangeExt: Double, maxLoad: Double, crew: ClosedRange<Double>, paxSeated: ClosedRange<Double>, paxLitters: Double, slingloadCapacity: Double, internalFuel: Double, serviceCeiling: Double, inFlightRefuel: Bool, takeoffRunway: Double, landingRunway: Double, photoURL: String?) {
         self.modelNumber = modelNumber
         self.commonName = commonName
         self.otherName = otherName
@@ -33,12 +47,20 @@ class Aircraft: NSObject { //modelNumber, commonName, otherName, cruiseSpeed, ma
         self.maxRangeInt = maxRangeInt
         self.maxRangeExt = maxRangeExt
         self.maxLoad = maxLoad
-        self.minCrew = minCrew
-        self.maxCrew = maxCrew
+        self.crew = crew
+        self.paxSeated = paxSeated
+        self.paxLitters = paxLitters
+        self.slingloadCapacity = slingloadCapacity
+        self.internalFuel = internalFuel
+        self.serviceCeiling = serviceCeiling
+        self.inFlightRefuel = inFlightRefuel
+        self.takeoffRunway = takeoffRunway
+        self.landingRunway = landingRunway
+        self.photoURL = photoURL
     }
     
     
     func toString() {
-        print ("Aircraft Details: Model Number = \(modelNumber), Common Name = \(commonName), Other Name = \(otherName), Max Speed = \(maxSpeed), Max Range = \(maxRangeInt), Max Load = \(maxLoad), Min Crew = \(minCrew), Max Crew = \(maxCrew)")
+        print ("Aircraft Details: Model Number = \(modelNumber), Common Name = \(commonName), Other Name = \(otherName), Max Speed = \(maxSpeed), Max Range = \(maxRangeInt), Max Load = \(maxLoad)")
     }
 }
