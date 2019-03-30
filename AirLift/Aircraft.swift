@@ -36,7 +36,7 @@ class Aircraft: NSObject { //modelNumber, commonName, otherName, cruiseSpeed, ma
     
     
     
-    // STILL NEED TO ADD:  , paxSeated, paxLitters, slingloadCapacity, internalFuel, serviceCeiling, inFlightRefuel, runwayLength
+    // STILL NEED TO ADD: VerticalAirlift : Bool 
     
     init(modelNumber: String, commonName: String, otherName: String, cruiseSpeed:Double, maxSpeed: Double, maxRangeInt: Double, maxRangeExt: Double, maxLoad: Double, crew: ClosedRange<Double>, paxSeated: ClosedRange<Double>, paxLitters: Double, slingloadCapacity: Double, internalFuel: Double, serviceCeiling: Double, inFlightRefuel: Bool, takeoffRunway: Double, landingRunway: Double, photoURL: String?) {
         self.modelNumber = modelNumber

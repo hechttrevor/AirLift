@@ -10,7 +10,7 @@ import UIKit
 import FirebaseDatabase
 import FirebaseAuth
 
-class ViewControllerSignIn: UIViewController {
+class ViewControllerSignUp: UIViewController {
     
     let backgroundImageView = UIImageView()
     var ref : DatabaseReference!
@@ -99,3 +99,14 @@ class ViewControllerSignIn: UIViewController {
         self.present(alertController, animated: true, completion: nil)
     }
 }
+
+
+////Alert with action to bring you to Home page
+//func showAlert(title : String, message: String){
+//    let alertController = UIAlertController(title: title, message:message, preferredStyle: UIAlertController.Style.alert)
+//    alertController.addAction(UIAlertAction(title: "Continue", style: .default, handler: { (action: UIAlertAction!) in
+//        //Open Segue with Aircraft Home
+//        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "vcHome") as? ViewControllerHomePage { self.present(vc, animated: true, completion: nil) }
+//        
+//    }))
+//}
