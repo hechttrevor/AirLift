@@ -9,37 +9,53 @@
 import UIKit
 
 class ViewControllerFitler: UIViewController, UITableViewDataSource, UITableViewDelegate{
-
     
-
+    
+    var filterArray =  [ClosedRange<Double>]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        setFilterArray()
         // Do any additional setup after loading the view.
     }
     
     
     
+//TABLE VIEW SET UP ***********************************************************************************************
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return filterArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let c = tableView.dequeueReusableCell(withIdentifier: "cell1") as? TableViewCell else{
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell1") as? TableViewCellSlider else{
             return UITableViewCell()
         }
-        return c
-    }
+        cell.rangeSlider.minimumValue = 0
+        cell.rangeSlider.maximumValue = 100
+        cell.rangeSlider.upperValue = 100
+        cell.rangeSlider.stepValue = 10
 
+        return cell
+    }
+    //sets size of the cell
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 80
+    }
+    //makes each cell unclickable
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        return
+    }
     
-    /*
-    // MARK: - Navigation
+    
+    
+    
+    
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func setFilterArray(){
+        
+        filterArray.append(1...3)
+        filterArray.append(1...3)
+        filterArray.append(1...3)
     }
-    */
 
 }

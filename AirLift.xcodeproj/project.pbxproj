@@ -23,6 +23,7 @@
 		26CFA577224EC48B00F9299E /* ViewControllerTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CFA575224EC48B00F9299E /* ViewControllerTable.swift */; };
 		26CFA57C224ECF5500F9299E /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CFA57B224ECF5500F9299E /* TableViewCell.swift */; };
 		26CFA57E224F328100F9299E /* ViewControllerFitler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CFA57D224F328100F9299E /* ViewControllerFitler.swift */; };
+		26CFA5822253D82200F9299E /* TableViewCellSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CFA5812253D82200F9299E /* TableViewCellSlider.swift */; };
 		746270514C1DBCE9473235BA /* Pods_AirLiftTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 234C961E677D725BE85091C3 /* Pods_AirLiftTests.framework */; };
 		AB540E5A30F6DC8493E6EEC7 /* Pods_AirLift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A1573C2EF44B3A3BC7276D2 /* Pods_AirLift.framework */; };
 /* End PBXBuildFile section */
@@ -64,6 +65,7 @@
 		26CFA57D224F328100F9299E /* ViewControllerFitler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerFitler.swift; sourceTree = "<group>"; };
 		26CFA57F22527FEC00F9299E /* TradeGothicLT.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = TradeGothicLT.ttf; sourceTree = "<group>"; };
 		26CFA5802252822000F9299E /* TradeGothicLT2.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = TradeGothicLT2.ttf; sourceTree = "<group>"; };
+		26CFA5812253D82200F9299E /* TableViewCellSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCellSlider.swift; sourceTree = "<group>"; };
 		35276002AE3879719B3597BA /* Pods-AirLiftTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AirLiftTests.debug.xcconfig"; path = "Target Support Files/Pods-AirLiftTests/Pods-AirLiftTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5541C010D5FF0A4A28C88384 /* Pods-AirLiftTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AirLiftTests.release.xcconfig"; path = "Target Support Files/Pods-AirLiftTests/Pods-AirLiftTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -154,6 +156,7 @@
 				26CFA57B224ECF5500F9299E /* TableViewCell.swift */,
 				260D4248224C364A008B8AC4 /* ViewControllerInfoCard.swift */,
 				26CFA57D224F328100F9299E /* ViewControllerFitler.swift */,
+				26CFA5812253D82200F9299E /* TableViewCellSlider.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -334,6 +337,7 @@
 				"${PODS_ROOT}/Target Support Files/Pods-AirLift/Pods-AirLift-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftRangeSlider/SwiftRangeSlider.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
@@ -343,6 +347,7 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftRangeSlider.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
@@ -368,6 +373,7 @@
 				260D4244224C2C11008B8AC4 /* Aircraft.swift in Sources */,
 				260D4216224C2A59008B8AC4 /* AppDelegate.swift in Sources */,
 				26CFA57E224F328100F9299E /* ViewControllerFitler.swift in Sources */,
+				26CFA5822253D82200F9299E /* TableViewCellSlider.swift in Sources */,
 				26CFA57C224ECF5500F9299E /* TableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

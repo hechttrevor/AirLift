@@ -66,7 +66,7 @@ class ViewControllerTable: UIViewController, UITableViewDataSource, UITableViewD
 
     
     
-//TABLE SET UP ***********************************************************************************************
+//TABLE VIEW SET UP ***********************************************************************************************
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return currentAircraftArray.count
@@ -86,12 +86,11 @@ class ViewControllerTable: UIViewController, UITableViewDataSource, UITableViewD
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 80
     }
-    
+//ALERT for onClick cell
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         showAlertYesNo(title: "Selected Aircraft", message: "View the model: \(aircraftArray[indexPath.row].modelNumber)?", row: indexPath.row)
     }
-    //ALERT for onClick cell
     func showAlertYesNo(title : String, message: String, row: Int){
         let refreshAlert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
         //Click OK

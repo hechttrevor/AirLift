@@ -9,6 +9,7 @@ target 'AirLift' do
     pod 'Firebase/Core'
     pod 'Firebase/Database'
     pod 'Firebase/Auth'
+    pod 'SwiftRangeSlider', '~> 2.0'
 
 
   target 'AirLiftTests' do
