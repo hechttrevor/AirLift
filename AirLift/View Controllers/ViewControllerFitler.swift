@@ -8,7 +8,9 @@
 
 import UIKit
 
-class ViewControllerFitler: UIViewController {
+class ViewControllerFitler: UIViewController, UITableViewDataSource, UITableViewDelegate{
+
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -16,7 +18,20 @@ class ViewControllerFitler: UIViewController {
         // Do any additional setup after loading the view.
     }
     
+    
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let c = tableView.dequeueReusableCell(withIdentifier: "cell1") as? TableViewCell else{
+            return UITableViewCell()
+        }
+        return c
+    }
 
+    
     /*
     // MARK: - Navigation
 

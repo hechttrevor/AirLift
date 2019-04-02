@@ -26,7 +26,6 @@ class ViewControllerTable: UIViewController, UITableViewDataSource, UITableViewD
     override func viewDidLoad() {
         super.viewDidLoad()
         getData()
-        
     }
     
    
@@ -43,15 +42,14 @@ class ViewControllerTable: UIViewController, UITableViewDataSource, UITableViewD
         })
         table.reloadData()
     }
-    
+//vertical lift switch
     func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
         switch selectedScope{
         case 0:
             currentAircraftArray = aircraftArray
         case 1:
             currentAircraftArray = aircraftArray.filter { (aircraft) -> Bool in
-            //This is just for testing. Eventually I will check to see if airlift == true
-                return (aircraft.modelNumber == ("CH-47D"))
+                return (aircraft.verticalLift == true)
             }
         default:
             break
@@ -63,6 +61,7 @@ class ViewControllerTable: UIViewController, UITableViewDataSource, UITableViewD
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         self.searchBar.endEditing(true)
     }
+    
     
 
     
@@ -98,7 +97,7 @@ class ViewControllerTable: UIViewController, UITableViewDataSource, UITableViewD
         //Click OK
         refreshAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction!) in
             //Open Segue with Aircraft Data
-            TableViewAircrafts.baseballCard = self.aircraftArray[row]
+            ViewControllerTable.baseballCard = self.aircraftArray[row]
             if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "vcInfo") as? ViewControllerInfoCard {
                 //ViewControllerAircraftInfo.aircraft = self.aircraftArray[row]
                 self.present(vc, animated: true, completion: nil)
@@ -125,28 +124,29 @@ class ViewControllerTable: UIViewController, UITableViewDataSource, UITableViewD
             //Collects data from firebase, fill array of aircrafts
                 let snapValues = snap.value as? NSDictionary
                 
-                let inFlightRefuel = snapValues?["inFlightRefuel"] as? Bool ?? false
-                let commonName = snapValues?["commonName"] as? String ?? ""
-                let otherName = snapValues?["otherName"] as? String ?? ""
-                let photoURL =  snapValues?["photo"] as? String ?? ""
-                let cruiseSpeed = snapValues?["cruiseSpeed"]as? Double ?? 0
-                let maxSpeed = snapValues?["maxSpeed"] as? Double ?? 0
-                let maxRangeInt = snapValues?["maxRangeInt"] as? Double ?? 0
-                let maxRangeExt = snapValues?["maxRangeExt"] as? Double ?? 0
-                let maxLoad = snapValues?["maxLoad"] as? Double ?? 0
-                let minCrew = snapValues?["minCrew"] as? Double ?? 0
+                let inFlightRefuel = snapValues?["inFlightRefuel"] as? Bool ?? false //find a way to make it NA
+                let verticalLift = snapValues?["verticalLift"] as? Bool ?? false
+                let commonName = snapValues?["commonName"] as? String ?? "N/A"
+                let otherName = snapValues?["otherName"] as? String ?? "N/A"
+                let photoURL =  snapValues?["photo"] as? String ?? "N/A"
+                let cruiseSpeed = snapValues?["cruiseSpeed"]as? Double ?? -1
+                let maxSpeed = snapValues?["maxSpeed"] as? Double ?? -1
+                let maxRangeInt = snapValues?["maxRangeInt"] as? Double ?? -1
+                let maxRangeExt = snapValues?["maxRangeExt"] as? Double ?? -1
+                let maxLoad = snapValues?["maxLoad"] as? Double ?? -1
+                let minCrew = snapValues?["minCrew"] as? Double ?? -1
                 let maxCrew = snapValues?["maxCrew"] as? Double ?? minCrew
-                let paxSeatedMin = snapValues?["paxSeatedMin"] as? Double ?? 0
+                let paxSeatedMin = snapValues?["paxSeatedMin"] as? Double ?? -1
                 let paxSeatedMax = snapValues?["paxSeatedMax"] as? Double ?? paxSeatedMin
                 let paxLitters = snapValues?["paxLitters"] as? Double ?? 0
-                let slingloadCapacity = snapValues?["slingloadCapacity"] as? Double ?? 0
-                let internalFuel = snapValues?["internalFuel"] as? Double ?? 0
-                let serviceCeiling = snapValues?["serviceCeiling"] as? Double ?? 0
+                let slingloadCapacity = snapValues?["slingloadCapacity"] as? Double ?? -1
+                let internalFuel = snapValues?["internalFuel"] as? Double ?? -1
+                let serviceCeiling = snapValues?["serviceCeiling"] as? Double ?? -1
                 let takeoffRunway = snapValues?["takeoffRunway"] as? Double ?? 0
-                let landingRunway = snapValues?["landingRunway"] as? Double ?? 0
+                let landingRunway = snapValues?["landingRunway"] as? Double ?? -1
                 
             //Add each element of each child to Aircraft array
-                self.aircraftArray.append(Aircraft.init(modelNumber: modelNumber, commonName: commonName,otherName: otherName, cruiseSpeed: cruiseSpeed, maxSpeed: maxSpeed, maxRangeInt: maxRangeInt, maxRangeExt: maxRangeExt, maxLoad: maxLoad, crew: minCrew...maxCrew, paxSeated: paxSeatedMin...paxSeatedMax, paxLitters: paxLitters, slingloadCapacity: slingloadCapacity, internalFuel: internalFuel, serviceCeiling: serviceCeiling, inFlightRefuel: inFlightRefuel, takeoffRunway: takeoffRunway, landingRunway: landingRunway, photoURL: photoURL))
+                self.aircraftArray.append(Aircraft.init(modelNumber: modelNumber, commonName: commonName,otherName: otherName, cruiseSpeed: cruiseSpeed, maxSpeed: maxSpeed, maxRangeInt: maxRangeInt, maxRangeExt: maxRangeExt, maxLoad: maxLoad, crew: minCrew...maxCrew, paxSeated: paxSeatedMin...paxSeatedMax, paxLitters: paxLitters, slingloadCapacity: slingloadCapacity, internalFuel: internalFuel, serviceCeiling: serviceCeiling, inFlightRefuel: inFlightRefuel, takeoffRunway: takeoffRunway, landingRunway: landingRunway, photoURL: photoURL, verticalLift: verticalLift))
                 self.currentAircraftArray = self.aircraftArray
             }
         }) { (error) in

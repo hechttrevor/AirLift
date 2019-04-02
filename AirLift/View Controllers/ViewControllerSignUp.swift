@@ -22,10 +22,11 @@ class ViewControllerSignUp: UIViewController {
         super.viewDidLoad()
         setBackground()
         setUpTextFields()
-        initiateFirebase()
-        
+        ref = Database.database().reference()
+
     }
     
+//ON Click listener for register button
     @IBAction func signUpConfirmation(_ sender: Any) {
         //make sure textFields are valid
         guard let email = emailTF.text, let password = passwordTF.text, let confirmPass = confirmPassTF.text
@@ -47,28 +48,44 @@ class ViewControllerSignUp: UIViewController {
                 return
             }
             //if email and pass are valid:
-                // self.showAlert(title: "Success" , message: "Email: \(email) has successfully been registered")
             let userInfo = ["email" : email, "password" : password]
             let userChild = self.ref.child("Users").child((user?.user.uid)!)
+            
+            
+            
+            
+            
             userChild.updateChildValues(userInfo, withCompletionBlock: { (err, ref)in
                 if err != nil{
-                    print(err ?? "")
+                    self.showAlert(title: "Error", message: "\(String(describing: err))")
+                    print (err ?? "")
                     return
                 }
-                //Send to main page
-                if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "vcHome") as? ViewControllerHomePage {
-                    self.present(vc, animated: true, completion: nil)
-                }
+                self.showAlertAndSendHome(title: "Success" , message: "Email: \(email) has successfully been registered")
+//                //Send to main page
+//                if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "vcHome") as? ViewControllerHomePage {
+//                    self.present(vc, animated: true, completion: nil)
+//                }
             })
         }
         
 
     }
     
+//Alert with action to bring you to Home page
+    func showAlertAndSendHome(title : String, message: String){
+        let alertController = UIAlertController(title: title, message:message, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "Continue", style: .default, handler: { (action: UIAlertAction!) in
+            //Open Segue with Aircraft Home
+            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "vcHome") as? ViewControllerHomePage { self.present(vc, animated: true, completion: nil) }
+    
+        }))
+            self.present(alertController, animated: true, completion: nil)
+    }
+    
     
 //THESE ARE COMMON funcs - in most files  ******************************************************************
     func initiateFirebase(){
-        ref = Database.database().reference()
 //        let actionCodeSettings = ActionCodeSettings()
 //        actionCodeSettings.url = URL(string: "https://console.firebase.google.com/project/rescueapp-d91a0")
 //        actionCodeSettings.handleCodeInApp = true
@@ -95,18 +112,10 @@ class ViewControllerSignUp: UIViewController {
         let alertController = UIAlertController(title: title, message:
             message, preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "Dismiss", style: .default))
-        
+
         self.present(alertController, animated: true, completion: nil)
     }
 }
 
 
-////Alert with action to bring you to Home page
-//func showAlert(title : String, message: String){
-//    let alertController = UIAlertController(title: title, message:message, preferredStyle: UIAlertController.Style.alert)
-//    alertController.addAction(UIAlertAction(title: "Continue", style: .default, handler: { (action: UIAlertAction!) in
-//        //Open Segue with Aircraft Home
-//        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "vcHome") as? ViewControllerHomePage { self.present(vc, animated: true, completion: nil) }
-//        
-//    }))
-//}
+

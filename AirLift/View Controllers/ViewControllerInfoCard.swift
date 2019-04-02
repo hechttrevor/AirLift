@@ -15,6 +15,24 @@ class ViewControllerInfoCard: UIViewController {
     @IBOutlet weak var otherName: UILabel!
     @IBOutlet weak var cruiseSpeed: UILabel!
     @IBOutlet weak var maxSpeed: UILabel!
+    @IBOutlet weak var maxRangeInt: UILabel!
+    @IBOutlet weak var maxRangeExt: UILabel!
+    @IBOutlet weak var maxLoad: UILabel!
+    @IBOutlet weak var crew: UILabel!
+    @IBOutlet weak var paxSeated: UILabel!
+    @IBOutlet weak var paxLitters: UILabel!
+    @IBOutlet weak var internalFuel: UILabel!
+    @IBOutlet weak var serviceCeiling: UILabel!
+    @IBOutlet weak var singleLoadCapacity: UILabel!
+    @IBOutlet weak var inFlightRefuel: UILabel!
+    @IBOutlet weak var takeoffRunway: UILabel!
+    @IBOutlet weak var landingRunway: UILabel!
+    
+    
+    
+    
+    
+    
     @IBOutlet weak var aircraftPhoto: UIImageView!
     var image : UIImage!
     
@@ -22,7 +40,7 @@ class ViewControllerInfoCard: UIViewController {
     let defaultSession = URLSession(configuration: .default)
     
     
-    let aircraft = TableViewAircrafts.baseballCard
+    let aircraft = ViewControllerTable.baseballCard
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,8 +48,8 @@ class ViewControllerInfoCard: UIViewController {
         setImage()
     }
     
+//This func convets http link to an imageView
     func setImage(){
-        
         dataTask?.cancel()
         if let photoUrl = aircraft?.photoURL{
             if photoUrl == "" {return}
@@ -39,7 +57,7 @@ class ViewControllerInfoCard: UIViewController {
             //Take link from database, then set it to the Aircraft photo
             dataTask = defaultSession.dataTask(with: url!, completionHandler: { (data, response, error) in
                 if error != nil {
-                    print(error)
+                    print(error!)
                     return
                 }
                 //succesfully found the link
@@ -60,10 +78,73 @@ class ViewControllerInfoCard: UIViewController {
         modelNumber.text = aircraft?.modelNumber
         commonName.text = aircraft?.commonName
         otherName.text = aircraft?.otherName
-        cruiseSpeed.text = "\(aircraft!.cruiseSpeed)"
-        maxSpeed.text = "\(aircraft!.maxSpeed)"
-       // let image = UIImage(named: "RescueBackgournd1")
+        
 
+        if aircraft!.crew.lowerBound == aircraft!.crew.upperBound {
+            crew.text = "\(aircraft!.crew.lowerBound)"
+        }else if aircraft!.crew.lowerBound > 0 {
+            crew.text = "\(aircraft!.crew.lowerBound) - \(aircraft!.crew.upperBound)"
+        }else {crew.text = "N/A"}
+        
+        if aircraft!.paxSeated.lowerBound == aircraft!.paxSeated.upperBound && aircraft!.paxSeated.lowerBound > 0{
+            paxSeated.text = "\(aircraft!.paxSeated.lowerBound)"
+        }else if aircraft!.paxSeated.lowerBound > 0 {
+            paxSeated.text = "\(aircraft!.paxSeated.lowerBound) - \(aircraft!.paxSeated.upperBound)"
+        }else {paxSeated.text = "N/A"}
+
+    
+        
+        
+        
+        if aircraft!.cruiseSpeed > 0{
+            cruiseSpeed.text = "\(aircraft!.cruiseSpeed) mph"
+        }else{cruiseSpeed.text = "N/A"}
+       
+        if aircraft!.maxSpeed > 0{
+            maxSpeed.text = "\(aircraft!.maxSpeed) mph"
+        }else{maxSpeed.text = "N/A"}
+       
+        if aircraft!.maxRangeInt > 0{
+            maxRangeInt.text = "\(aircraft!.maxRangeInt) mi"
+        }else{maxRangeInt.text = "N/A"}
+       
+        if aircraft!.maxRangeExt > 0{
+            maxRangeExt.text = "\(aircraft!.maxRangeExt) mi"
+        }else{maxRangeExt.text = "N/A"}
+       
+        if aircraft!.maxLoad > 0{
+            maxLoad.text = "\(aircraft!.maxLoad) lbs"
+        }else{maxSpeed.text = "N/A"}
+        
+        if aircraft!.paxLitters > 0{
+            paxLitters.text = "\(aircraft!.paxLitters)"
+        }else{paxLitters.text = "N/A"}
+        
+        if aircraft!.internalFuel > 0{
+            internalFuel.text = "\(aircraft!.internalFuel)"
+        }else{internalFuel.text = "N/A"}
+        
+        if aircraft!.serviceCeiling > 0{
+            serviceCeiling.text = "\(aircraft!.serviceCeiling)"
+        }else{serviceCeiling.text = "N/A"}
+        
+        if aircraft!.slingloadCapacity > 0{
+            singleLoadCapacity.text = "\(aircraft!.slingloadCapacity)"
+        }else{singleLoadCapacity.text = "N/A"}
+        
+//        if aircraft!.inFlightRefuel == nil{
+//            inFlightRefuel.text = "\(aircraft!.inFlightRefuel)"
+//        }else{inFlightRefuel.text = "N/A"}
+        
+        if aircraft!.takeoffRunway > 0{
+            takeoffRunway.text = "\(aircraft!.takeoffRunway) mi"
+        }else{takeoffRunway.text = "N/A"}
+       
+        if aircraft!.landingRunway > 0{
+            landingRunway.text = "\(aircraft!.landingRunway) mi"
+        }else{landingRunway.text = "N/A"}
+        
+        // let image = UIImage(named: "RescueBackgournd1")
     }
     
     @IBAction func closeView(_ sender: Any) {

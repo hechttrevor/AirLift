@@ -20,7 +20,6 @@
 		260D424D224D776D008B8AC4 /* ViewControllerSignUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260D424C224D776D008B8AC4 /* ViewControllerSignUp.swift */; };
 		260D424F224D7B07008B8AC4 /* TextFieldLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260D424E224D7B07008B8AC4 /* TextFieldLogin.swift */; };
 		260D4251224DA230008B8AC4 /* ViewControllerHomePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260D4250224DA230008B8AC4 /* ViewControllerHomePage.swift */; };
-		260D4253224DB4AF008B8AC4 /* TableViewAircrafts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260D4252224DB4AF008B8AC4 /* TableViewAircrafts.swift */; };
 		26CFA577224EC48B00F9299E /* ViewControllerTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CFA575224EC48B00F9299E /* ViewControllerTable.swift */; };
 		26CFA57C224ECF5500F9299E /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CFA57B224ECF5500F9299E /* TableViewCell.swift */; };
 		26CFA57E224F328100F9299E /* ViewControllerFitler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CFA57D224F328100F9299E /* ViewControllerFitler.swift */; };
@@ -60,10 +59,11 @@
 		260D424C224D776D008B8AC4 /* ViewControllerSignUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerSignUp.swift; sourceTree = "<group>"; };
 		260D424E224D7B07008B8AC4 /* TextFieldLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldLogin.swift; sourceTree = "<group>"; };
 		260D4250224DA230008B8AC4 /* ViewControllerHomePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerHomePage.swift; sourceTree = "<group>"; };
-		260D4252224DB4AF008B8AC4 /* TableViewAircrafts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewAircrafts.swift; sourceTree = "<group>"; };
 		26CFA575224EC48B00F9299E /* ViewControllerTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerTable.swift; sourceTree = "<group>"; };
 		26CFA57B224ECF5500F9299E /* TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		26CFA57D224F328100F9299E /* ViewControllerFitler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerFitler.swift; sourceTree = "<group>"; };
+		26CFA57F22527FEC00F9299E /* TradeGothicLT.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = TradeGothicLT.ttf; sourceTree = "<group>"; };
+		26CFA5802252822000F9299E /* TradeGothicLT2.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = TradeGothicLT2.ttf; sourceTree = "<group>"; };
 		35276002AE3879719B3597BA /* Pods-AirLiftTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AirLiftTests.debug.xcconfig"; path = "Target Support Files/Pods-AirLiftTests/Pods-AirLiftTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5541C010D5FF0A4A28C88384 /* Pods-AirLiftTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AirLiftTests.release.xcconfig"; path = "Target Support Files/Pods-AirLiftTests/Pods-AirLiftTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -136,6 +136,8 @@
 		260D4237224C2BF3008B8AC4 /* Custom Views */ = {
 			isa = PBXGroup;
 			children = (
+				26CFA5802252822000F9299E /* TradeGothicLT2.ttf */,
+				26CFA57F22527FEC00F9299E /* TradeGothicLT.ttf */,
 				260D4238224C2BF3008B8AC4 /* RoundButtonMain.swift */,
 				260D424E224D7B07008B8AC4 /* TextFieldLogin.swift */,
 			);
@@ -145,7 +147,6 @@
 		260D4247224C3625008B8AC4 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				260D4252224DB4AF008B8AC4 /* TableViewAircrafts.swift */,
 				260D424C224D776D008B8AC4 /* ViewControllerSignUp.swift */,
 				260D424A224D775C008B8AC4 /* ViewControllerLogIn.swift */,
 				260D4250224DA230008B8AC4 /* ViewControllerHomePage.swift */,
@@ -357,7 +358,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				260D4253224DB4AF008B8AC4 /* TableViewAircrafts.swift in Sources */,
 				26CFA577224EC48B00F9299E /* ViewControllerTable.swift in Sources */,
 				260D424F224D7B07008B8AC4 /* TextFieldLogin.swift in Sources */,
 				260D4249224C364A008B8AC4 /* ViewControllerInfoCard.swift in Sources */,

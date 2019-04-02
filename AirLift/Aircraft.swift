@@ -33,12 +33,13 @@ class Aircraft: NSObject { //modelNumber, commonName, otherName, cruiseSpeed, ma
     let paxSeated: ClosedRange<Double> // closed ranges have 3 dots between values a...b
     
     let inFlightRefuel: Bool
+    let verticalLift: Bool
     
     
     
     // STILL NEED TO ADD: VerticalAirlift : Bool 
     
-    init(modelNumber: String, commonName: String, otherName: String, cruiseSpeed:Double, maxSpeed: Double, maxRangeInt: Double, maxRangeExt: Double, maxLoad: Double, crew: ClosedRange<Double>, paxSeated: ClosedRange<Double>, paxLitters: Double, slingloadCapacity: Double, internalFuel: Double, serviceCeiling: Double, inFlightRefuel: Bool, takeoffRunway: Double, landingRunway: Double, photoURL: String?) {
+    init(modelNumber: String, commonName: String, otherName: String, cruiseSpeed:Double, maxSpeed: Double, maxRangeInt: Double, maxRangeExt: Double, maxLoad: Double, crew: ClosedRange<Double>, paxSeated: ClosedRange<Double>, paxLitters: Double, slingloadCapacity: Double, internalFuel: Double, serviceCeiling: Double, inFlightRefuel: Bool, takeoffRunway: Double, landingRunway: Double, photoURL: String?, verticalLift: Bool) {
         self.modelNumber = modelNumber
         self.commonName = commonName
         self.otherName = otherName
@@ -57,6 +58,7 @@ class Aircraft: NSObject { //modelNumber, commonName, otherName, cruiseSpeed, ma
         self.takeoffRunway = takeoffRunway
         self.landingRunway = landingRunway
         self.photoURL = photoURL
+        self.verticalLift = verticalLift
     }
     
     
