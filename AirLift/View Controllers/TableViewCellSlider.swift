@@ -12,6 +12,9 @@ import SwiftRangeSlider
 class TableViewCellSlider: UITableViewCell {
 
 
+    @IBOutlet weak var curMax: UILabel!
+    @IBOutlet weak var curMin: UILabel!
+    @IBOutlet weak var filterName: UILabel!
     @IBOutlet weak var rangeSlider: RangeSlider!
     
     
@@ -21,11 +24,22 @@ class TableViewCellSlider: UITableViewCell {
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        
-        // Configure the view for the selected state
+    //this makes the cell unselectable 
+        self.selectionStyle = .none
     }
 
     @IBAction func rangeSliderChanged(_ sender: RangeSlider) {
-         print("\(rangeSlider.lowerValue), \(rangeSlider.upperValue)")
+        
+        curMin.text = "\(Int(rangeSlider.lowerValue))"
+        curMax.text = "\(Int(rangeSlider.upperValue))"
+        let currMin = Int(rangeSlider.lowerValue)
+        let currMax = Int(rangeSlider.upperValue)
+//        let range = Int(rangeSlider.lowerValue)...Int(rangeSlider.upperValue)
+        ViewControllerFitler().setNumAircrafts(curMin: currMin,curMax: currMax)
+        //doSomething(currMin: currMin, currMax: currMax)
     }
+    
+//    func doSomething(currMin: Int, currMax: Int){
+//        
+//    }
 }

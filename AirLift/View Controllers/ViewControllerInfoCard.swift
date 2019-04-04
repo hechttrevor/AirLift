@@ -10,6 +10,7 @@ import UIKit
 
 class ViewControllerInfoCard: UIViewController {
 
+    @IBOutlet weak var backgroundView: UIImageView!
     @IBOutlet weak var modelNumber: UILabel!
     @IBOutlet weak var commonName: UILabel!
     @IBOutlet weak var otherName: UILabel!
@@ -40,12 +41,19 @@ class ViewControllerInfoCard: UIViewController {
     let defaultSession = URLSession(configuration: .default)
     
     
-    let aircraft = ViewControllerTable.baseballCard
+    var aircraft : Aircraft!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setLabelsText()
         setImage()
+        
+        //Round edges of the card
+        backgroundView.layer.cornerRadius = 30
+        backgroundView.clipsToBounds = true
+        
+        //backgroundView.layer.masksToBounds = false
+ 
     }
     
 //This func convets http link to an imageView
@@ -75,12 +83,12 @@ class ViewControllerInfoCard: UIViewController {
     }
     
     func setLabelsText(){
-        modelNumber.text = aircraft?.modelNumber
+        modelNumber.text = "\(aircraft!.modelNumber)/ "
         commonName.text = aircraft?.commonName
         otherName.text = aircraft?.otherName
         
-
-        if aircraft!.crew.lowerBound == aircraft!.crew.upperBound {
+ 
+        if aircraft!.crew.lowerBound == aircraft!.crew.upperBound && aircraft!.crew.lowerBound>0{
             crew.text = "\(aircraft!.crew.lowerBound)"
         }else if aircraft!.crew.lowerBound > 0 {
             crew.text = "\(aircraft!.crew.lowerBound) - \(aircraft!.crew.upperBound)"
@@ -114,7 +122,7 @@ class ViewControllerInfoCard: UIViewController {
        
         if aircraft!.maxLoad > 0{
             maxLoad.text = "\(aircraft!.maxLoad) lbs"
-        }else{maxSpeed.text = "N/A"}
+        }else{maxLoad.text = "N/A"}
         
         if aircraft!.paxLitters > 0{
             paxLitters.text = "\(aircraft!.paxLitters)"
@@ -125,11 +133,11 @@ class ViewControllerInfoCard: UIViewController {
         }else{internalFuel.text = "N/A"}
         
         if aircraft!.serviceCeiling > 0{
-            serviceCeiling.text = "\(aircraft!.serviceCeiling)"
+            serviceCeiling.text = "\(aircraft!.serviceCeiling) feet"
         }else{serviceCeiling.text = "N/A"}
         
-        if aircraft!.slingloadCapacity > 0{
-            singleLoadCapacity.text = "\(aircraft!.slingloadCapacity)"
+        if aircraft!.singleLoadCapacity > 0{
+            singleLoadCapacity.text = "\(aircraft!.singleLoadCapacity)"
         }else{singleLoadCapacity.text = "N/A"}
         
 //        if aircraft!.inFlightRefuel == nil{
@@ -137,11 +145,11 @@ class ViewControllerInfoCard: UIViewController {
 //        }else{inFlightRefuel.text = "N/A"}
         
         if aircraft!.takeoffRunway > 0{
-            takeoffRunway.text = "\(aircraft!.takeoffRunway) mi"
+            takeoffRunway.text = "\(aircraft!.takeoffRunway) feet"
         }else{takeoffRunway.text = "N/A"}
        
         if aircraft!.landingRunway > 0{
-            landingRunway.text = "\(aircraft!.landingRunway) mi"
+            landingRunway.text = "\(aircraft!.landingRunway) feet"
         }else{landingRunway.text = "N/A"}
         
         // let image = UIImage(named: "RescueBackgournd1")

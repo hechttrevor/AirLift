@@ -17,20 +17,20 @@ class Aircraft: NSObject { //modelNumber, commonName, otherName, cruiseSpeed, ma
     let otherName: String
     let photoURL: String?
     
-    let cruiseSpeed: Double
-    let maxSpeed: Double
-    let maxRangeInt: Double
-    let maxRangeExt: Double
-    let maxLoad: Double
-    let paxLitters: Double
-    let slingloadCapacity: Double
-    let internalFuel: Double
-    let serviceCeiling: Double
-    let takeoffRunway: Double
-    let landingRunway: Double
+    let cruiseSpeed: Int
+    let maxSpeed: Int
+    let maxRangeInt: Int
+    let maxRangeExt: Int
+    let maxLoad: Int
+    let paxLitters: Int
+    let singleLoadCapacity: Int
+    let internalFuel: Int
+    let serviceCeiling: Int
+    let takeoffRunway: Int
+    let landingRunway: Int
 
-    let crew: ClosedRange<Double>
-    let paxSeated: ClosedRange<Double> // closed ranges have 3 dots between values a...b
+    let crew: ClosedRange<Int>
+    let paxSeated: ClosedRange<Int> // closed ranges have 3 dots between values a...b
     
     let inFlightRefuel: Bool
     let verticalLift: Bool
@@ -39,7 +39,7 @@ class Aircraft: NSObject { //modelNumber, commonName, otherName, cruiseSpeed, ma
     
     // STILL NEED TO ADD: VerticalAirlift : Bool 
     
-    init(modelNumber: String, commonName: String, otherName: String, cruiseSpeed:Double, maxSpeed: Double, maxRangeInt: Double, maxRangeExt: Double, maxLoad: Double, crew: ClosedRange<Double>, paxSeated: ClosedRange<Double>, paxLitters: Double, slingloadCapacity: Double, internalFuel: Double, serviceCeiling: Double, inFlightRefuel: Bool, takeoffRunway: Double, landingRunway: Double, photoURL: String?, verticalLift: Bool) {
+    init(modelNumber: String, commonName: String, otherName: String, cruiseSpeed:Int, maxSpeed: Int, maxRangeInt: Int, maxRangeExt: Int, maxLoad: Int, crew: ClosedRange<Int>, paxSeated: ClosedRange<Int>, paxLitters: Int, singleLoadCapacity: Int, internalFuel: Int, serviceCeiling: Int, inFlightRefuel: Bool, takeoffRunway: Int, landingRunway: Int, photoURL: String?, verticalLift: Bool) {
         self.modelNumber = modelNumber
         self.commonName = commonName
         self.otherName = otherName
@@ -51,7 +51,7 @@ class Aircraft: NSObject { //modelNumber, commonName, otherName, cruiseSpeed, ma
         self.crew = crew
         self.paxSeated = paxSeated
         self.paxLitters = paxLitters
-        self.slingloadCapacity = slingloadCapacity
+        self.singleLoadCapacity = singleLoadCapacity
         self.internalFuel = internalFuel
         self.serviceCeiling = serviceCeiling
         self.inFlightRefuel = inFlightRefuel

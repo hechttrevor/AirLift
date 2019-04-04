@@ -12,6 +12,7 @@ class ViewControllerHomePage: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
     }
     
 }
