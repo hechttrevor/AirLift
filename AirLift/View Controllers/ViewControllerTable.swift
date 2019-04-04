@@ -20,7 +20,7 @@ class ViewControllerTable: UIViewController, UITableViewDataSource, UITableViewD
 
     var ref : DatabaseReference!
     var aircraftArray = [Aircraft]()
-    var currentAircraftArray = [Aircraft]()
+    static var currentAircraftArray = [Aircraft]()
     var fullArray = [Aircraft]()
     var infoCard: Aircraft!
     
@@ -79,11 +79,11 @@ class ViewControllerTable: UIViewController, UITableViewDataSource, UITableViewD
 //SEARCH BAR SET UP ******************************************************************************************************
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         guard !searchText.isEmpty else{
-            currentAircraftArray = aircraftArray
+            ViewControllerTable.currentAircraftArray = aircraftArray
             table.reloadData()
             return
         }
-        currentAircraftArray = aircraftArray.filter({ (aircraft) -> Bool in
+        ViewControllerTable.currentAircraftArray = aircraftArray.filter({ (aircraft) -> Bool in
             return (aircraft.modelNumber.lowercased().contains(searchText.lowercased()) ||  aircraft.commonName.lowercased().contains(searchText.lowercased()))
         })
         table.reloadData()
@@ -92,9 +92,9 @@ class ViewControllerTable: UIViewController, UITableViewDataSource, UITableViewD
     func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
         switch selectedScope{
         case 0:
-            currentAircraftArray = aircraftArray
+            ViewControllerTable.currentAircraftArray = aircraftArray
         case 1:
-            currentAircraftArray = aircraftArray.filter { (aircraft) -> Bool in
+            ViewControllerTable.currentAircraftArray = aircraftArray.filter { (aircraft) -> Bool in
                 return (aircraft.verticalLift == true)
             }
         default:
@@ -115,15 +115,15 @@ class ViewControllerTable: UIViewController, UITableViewDataSource, UITableViewD
     
 //TABLE VIEW SET UP ******************************************************************************************************
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return currentAircraftArray.count
+        return ViewControllerTable.currentAircraftArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as? TableViewCell else{
             return UITableViewCell()
         }
-        cell.commonNameLB.text = currentAircraftArray[indexPath.row].commonName
-        cell.modelNumberLB.text = currentAircraftArray[indexPath.row].modelNumber
+        cell.commonNameLB.text = ViewControllerTable.currentAircraftArray[indexPath.row].commonName
+        cell.modelNumberLB.text = ViewControllerTable.currentAircraftArray[indexPath.row].modelNumber
         cell.aircraftPhoto.image = UIImage(named: "testImage")
         return cell
     }
@@ -191,7 +191,7 @@ class ViewControllerTable: UIViewController, UITableViewDataSource, UITableViewD
                 
             //Add each element of each child to Aircraft array
                 self.aircraftArray.append(Aircraft.init(modelNumber: modelNumber, commonName: commonName,otherName: otherName, cruiseSpeed: cruiseSpeed, maxSpeed: maxSpeed, maxRangeInt: maxRangeInt, maxRangeExt: maxRangeExt, maxLoad: maxLoad, crew: minCrew...maxCrew, paxSeated: paxSeatedMin...paxSeatedMax, paxLitters: paxLitters, singleLoadCapacity: singleLoadCapacity, internalFuel: internalFuel, serviceCeiling: serviceCeiling, inFlightRefuel: inFlightRefuel, takeoffRunway: takeoffRunway, landingRunway: landingRunway, photoURL: photoURL, verticalLift: verticalLift))
-                self.currentAircraftArray = self.aircraftArray
+                ViewControllerTable.currentAircraftArray = self.aircraftArray
             }
         }) { (error) in
             print(error.localizedDescription)

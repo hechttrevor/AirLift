@@ -1127,24 +1127,34 @@
                                                     <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bb0-92-EWG">
+                                                    <rect key="frame" x="324" y="25.5" width="36" height="30"/>
+                                                    <state key="normal" title="Clear"/>
+                                                    <connections>
+                                                        <action selector="onClickClearButton:" destination="yJi-4T-sb6" eventType="touchUpInside" id="hZT-iJ-IRM"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="84S-ga-clM" secondAttribute="trailing" constant="15" id="0H1-Pr-OIP"/>
                                                 <constraint firstItem="xw3-T3-4oS" firstAttribute="top" secondItem="EYX-6c-IpQ" secondAttribute="bottom" constant="15" id="98V-iL-ICm"/>
                                                 <constraint firstItem="DOw-vE-vGi" firstAttribute="leading" secondItem="htC-r2-YHw" secondAttribute="leading" constant="15" id="EMY-Ds-6PW"/>
                                                 <constraint firstItem="EYX-6c-IpQ" firstAttribute="centerY" secondItem="htC-r2-YHw" secondAttribute="centerY" constant="10" id="Ngz-B3-eMj"/>
+                                                <constraint firstAttribute="trailing" secondItem="bb0-92-EWG" secondAttribute="trailing" constant="15" id="U81-lC-mbE"/>
                                                 <constraint firstItem="84S-ga-clM" firstAttribute="centerY" secondItem="xw3-T3-4oS" secondAttribute="centerY" id="abP-vb-lhz"/>
                                                 <constraint firstItem="xw3-T3-4oS" firstAttribute="leading" secondItem="htC-r2-YHw" secondAttribute="leading" constant="15" id="akT-Rs-jAg"/>
                                                 <constraint firstItem="DOw-vE-vGi" firstAttribute="top" secondItem="htC-r2-YHw" secondAttribute="top" constant="30" id="byw-Bk-r4a"/>
                                                 <constraint firstItem="EYX-6c-IpQ" firstAttribute="centerX" secondItem="htC-r2-YHw" secondAttribute="centerX" id="cFf-4F-HxF"/>
                                                 <constraint firstItem="EYX-6c-IpQ" firstAttribute="leading" secondItem="htC-r2-YHw" secondAttribute="leading" constant="15" id="eXX-Fq-7BS"/>
+                                                <constraint firstItem="bb0-92-EWG" firstAttribute="centerY" secondItem="DOw-vE-vGi" secondAttribute="centerY" id="kSO-kQ-Nat"/>
                                                 <constraint firstAttribute="trailing" secondItem="EYX-6c-IpQ" secondAttribute="trailing" constant="15" id="lIa-bc-aOG"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="clearButton" destination="bb0-92-EWG" id="bhV-8K-kgB"/>
                                             <outlet property="curMax" destination="84S-ga-clM" id="1XW-uH-nf5"/>
                                             <outlet property="curMin" destination="xw3-T3-4oS" id="t30-US-IhH"/>
-                                            <outlet property="filterName" destination="DOw-vE-vGi" id="mdF-vb-OUQ"/>
+                                            <outlet property="filterNames" destination="DOw-vE-vGi" id="P5R-ic-XQR"/>
                                             <outlet property="rangeSlider" destination="EYX-6c-IpQ" id="7Lr-xD-HjB"/>
                                         </connections>
                                     </tableViewCell>
@@ -1160,6 +1170,19 @@
                                 <state key="normal" title="Button">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <connections>
+                                    <action selector="onClickSeeAircrafts:" destination="HXy-4V-2P4" eventType="touchUpInside" id="Man-Qt-Wmx"/>
+                                    <segue destination="UTh-Kf-9bz" kind="presentation" modalTransitionStyle="crossDissolve" id="5rU-hF-U6s"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SZk-Zg-RpI">
+                                <rect key="frame" x="304" y="25" width="56" height="30"/>
+                                <state key="normal" title="Clear all">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="onClickClearAll:" destination="HXy-4V-2P4" eventType="touchUpInside" id="ZsD-Is-WTr"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.078431372550000003" green="0.43137254899999999" blue="0.90196078430000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1169,11 +1192,13 @@
                             <constraint firstItem="iej-7c-R9a" firstAttribute="leading" secondItem="f1i-Ms-hka" secondAttribute="leading" id="5am-5R-WBY"/>
                             <constraint firstItem="iej-7c-R9a" firstAttribute="top" secondItem="BXW-Of-jWF" secondAttribute="bottom" constant="9" id="6Al-f9-4td"/>
                             <constraint firstItem="BXW-Of-jWF" firstAttribute="top" secondItem="f1i-Ms-hka" secondAttribute="top" constant="9" id="A9d-ia-X2W"/>
+                            <constraint firstItem="f1i-Ms-hka" firstAttribute="trailing" secondItem="SZk-Zg-RpI" secondAttribute="trailing" constant="15" id="Bg1-W2-Sve"/>
                             <constraint firstItem="cq3-2G-DyM" firstAttribute="top" secondItem="iej-7c-R9a" secondAttribute="bottom" constant="5" id="DUW-kc-xpP"/>
                             <constraint firstItem="cq3-2G-DyM" firstAttribute="leading" secondItem="f1i-Ms-hka" secondAttribute="leading" constant="5" id="GiH-fO-1Sa"/>
                             <constraint firstItem="f1i-Ms-hka" firstAttribute="trailing" secondItem="iej-7c-R9a" secondAttribute="trailing" id="XZg-SA-rqn"/>
                             <constraint firstItem="BXW-Of-jWF" firstAttribute="centerX" secondItem="B5H-XP-R27" secondAttribute="centerX" id="YUs-6K-a1J"/>
                             <constraint firstItem="9Xh-Hn-GOl" firstAttribute="top" secondItem="f1i-Ms-hka" secondAttribute="top" constant="10" id="cI2-hv-ynE"/>
+                            <constraint firstItem="SZk-Zg-RpI" firstAttribute="bottom" secondItem="BXW-Of-jWF" secondAttribute="bottom" id="dYu-LS-QPH"/>
                             <constraint firstItem="iej-7c-R9a" firstAttribute="top" secondItem="f1i-Ms-hka" secondAttribute="top" constant="44" id="eE8-XE-1h6"/>
                             <constraint firstItem="cq3-2G-DyM" firstAttribute="centerX" secondItem="B5H-XP-R27" secondAttribute="centerX" id="jIi-wz-rgi"/>
                             <constraint firstItem="9Xh-Hn-GOl" firstAttribute="leading" secondItem="f1i-Ms-hka" secondAttribute="leading" constant="10" id="vJc-qW-aox"/>
@@ -1182,7 +1207,9 @@
                         <viewLayoutGuide key="safeArea" id="f1i-Ms-hka"/>
                     </view>
                     <connections>
+                        <outlet property="clearAll" destination="SZk-Zg-RpI" id="VI1-jC-mvu"/>
                         <outlet property="seeNumButton" destination="cq3-2G-DyM" id="1tT-KK-7TO"/>
+                        <outlet property="table" destination="iej-7c-R9a" id="v6T-P4-u41"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BqD-Qs-J9i" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1215,7 +1242,7 @@
         <image name="backgroundColor" width="536" height="536"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="g9I-xD-9gY"/>
+        <segue reference="5rU-hF-U6s"/>
         <segue reference="qi0-3s-c3j"/>
         <segue reference="oYl-aK-OZS"/>
         <segue reference="Fpb-OO-Pr4"/>

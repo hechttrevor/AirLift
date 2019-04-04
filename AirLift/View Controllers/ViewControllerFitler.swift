@@ -14,37 +14,120 @@ class ViewControllerFitler: UIViewController, UITableViewDataSource, UITableView
     
     
   
-   
-    @IBOutlet var seeNumButton: UIButton!
+    @IBOutlet weak var table: UITableView!
+    @IBOutlet weak var clearAll: UIButton!
+    
+    @IBOutlet weak var seeNumButton: UIButton!
     var filterRangeArray = [filters]()
     var aircraftArray =  [Aircraft]()// ViewControllerTable.filterAircraftArray
-    static var currentArray = [Aircraft]()
     static var fixedArray = [Aircraft]()
+    static var finalArray = [Aircraft]()
+    static var cruiseSpeedArray = [Aircraft]()
+    static var cruiseSpeedIsCleared = true
+    static var maxSpeedArray = [Aircraft]()
+    static var maxSpeedIsCleared = true
+    static var maxRangeIntArray = [Aircraft]()
+    static var maxRangeIntIsCleared = true
+    
+    
+    
+    
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        ViewControllerFitler.currentArray = aircraftArray
-        ViewControllerFitler.fixedArray = aircraftArray
+        resetAllArrays()
         getMinMaxFromAircraftArray()
 
-        seeNumButton?.setTitle("See \(ViewControllerFitler.currentArray.count) aircrafts", for: .normal)
-//        print(currentArray.count)
-//        print(aircraftArray.count)
+    }
+    
+    
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        let vc = segue.destination as! UINavigationController
+//        vc.currentAircraftArray = ViewControllerFitler.finalArray
+//    }
+    
+    
+    
+    @IBAction func onClickSeeAircrafts(_ sender: Any) {
+        ViewControllerTable.currentAircraftArray = ViewControllerFitler.finalArray
+        //performSegue(withIdentifier: "tableSegue", sender: self)
+    }
+    
+    func resetAllArrays(){
+        ViewControllerFitler.fixedArray = aircraftArray
+        ViewControllerFitler.finalArray = aircraftArray
+        ViewControllerFitler.cruiseSpeedArray = aircraftArray
+        ViewControllerFitler.maxSpeedArray = aircraftArray
+        ViewControllerFitler.maxRangeIntArray = aircraftArray
+        seeNumButton.setTitle("See \(ViewControllerFitler.finalArray.count) aircrafts", for: .normal)
+        clearAll.isHidden = true
+    }
+    
+    @IBAction func onClickClearAll(_ sender: UIButton) {
+        resetAllArrays()
+        table.reloadData()
+    }
+    
+    func compareArraysAndSetButton(button: UIButton){
+        //compares all arrays and outputs array that shares values in every array
+        ViewControllerFitler.finalArray = ViewControllerFitler.cruiseSpeedArray.filter(ViewControllerFitler.maxSpeedArray.contains)
+        ViewControllerFitler.finalArray = ViewControllerFitler.finalArray.filter(ViewControllerFitler.maxRangeIntArray.contains)
+        
+        //Outputs 3 cases onto the button
+        if ViewControllerFitler.finalArray.count > 1{
+            button.setTitle("See \(ViewControllerFitler.finalArray.count) aircrafts", for: .normal)
+        } else if ViewControllerFitler.finalArray.count == 1{
+            button.setTitle("See \(ViewControllerFitler.finalArray.count) aircraft", for: .normal)
+        } else if ViewControllerFitler.finalArray.count == 0{
+            button.setTitle("No aircrafts with these attributes", for: .normal)
+        }
+        
     }
     
 
-    func setNumAircrafts(curMin: Int,curMax: Int){
-        
-        //FIGURE OUT HOW TO MAKE THIS WORK FOR EACH ATTRIBUTE
-        ViewControllerFitler.currentArray = ViewControllerFitler.fixedArray.filter { (aircraft) -> Bool in
-            return (aircraft.cruiseSpeed >= curMin && aircraft.cruiseSpeed <= curMax)
-             //ViewControllerFitler.currentArray.append(aircraftArray(count))
+    //Sets the certain array back to fixedArray
+    func clearButtonClicked(button: UIButton, clearAllButton: UIButton, filterName: String){
+        if filterName == "Cruise Speed (mph)"{
+            ViewControllerFitler.cruiseSpeedIsCleared = true
+            ViewControllerFitler.cruiseSpeedArray = ViewControllerFitler.fixedArray
+        }else if filterName == "Max Speed (mph)"{
+            ViewControllerFitler.maxSpeedIsCleared = true
+            ViewControllerFitler.maxSpeedArray = ViewControllerFitler.fixedArray
+        }else if filterName == "Max Range Int (mi)"{
+            ViewControllerFitler.maxRangeIntArray = ViewControllerFitler.fixedArray
         }
-        print(ViewControllerFitler.currentArray.count)
-        print(ViewControllerFitler.currentArray)
-        
-        //TO DO!! figure out why this isn't working
-        seeNumButton?.setTitle("yarg", for: .normal)
+        compareArraysAndSetButton(button: button)
+       
+        //Hide Clear all button if all cells are cleared
+        if ViewControllerFitler.cruiseSpeedIsCleared && ViewControllerFitler.maxSpeedIsCleared && ViewControllerFitler.maxSpeedIsCleared {
+            clearAllButton.isHidden = true
+        }
+    }
+    
+    
+    //fitlers array based off the change in rangeSlider
+    func setNumAircrafts(curMin: Int,curMax: Int, button: UIButton, filterName: String){
+        //FIGURE OUT HOW TO MAKE THIS WORK FOR EACH ATTRIBUTE
+        if filterName == "Cruise Speed (mph)"{
+            ViewControllerFitler.cruiseSpeedIsCleared = false
+            ViewControllerFitler.cruiseSpeedArray = ViewControllerFitler.fixedArray.filter { (aircraft) -> Bool in
+                return (aircraft.cruiseSpeed >= curMin && aircraft.cruiseSpeed <= curMax)
+            }
+        }
+        if filterName == "Max Speed (mph)"{
+            ViewControllerFitler.maxSpeedIsCleared = false
+            ViewControllerFitler.maxSpeedArray = ViewControllerFitler.fixedArray.filter { (aircraft) -> Bool in
+                return (aircraft.maxSpeed >= curMin && aircraft.maxSpeed <= curMax)
+            }
+        }
+        if filterName == "Max Range Int (mi)"{
+            ViewControllerFitler.maxRangeIntIsCleared = false
+            ViewControllerFitler.maxRangeIntArray = ViewControllerFitler.fixedArray.filter { (aircraft) -> Bool in
+                return (aircraft.maxRangeInt >= curMin && aircraft.maxRangeInt <= curMax)
+            }
+        }
+        compareArraysAndSetButton(button: button)
     }
 
     
@@ -69,9 +152,17 @@ class ViewControllerFitler: UIViewController, UITableViewDataSource, UITableView
         cell.rangeSlider.upperValue = Double(filterRangeArray[indexPath.row].filterRange.upperBound)
         cell.rangeSlider.stepValue =  stepValue
         //Set up our text labels
-        cell.filterName.text = filterRangeArray[indexPath.row].filterName
+        cell.filterNames.text = filterRangeArray[indexPath.row].filterName
         cell.curMin.text = "\(filterRangeArray[indexPath.row].filterRange.lowerBound)"
         cell.curMax.text = "\(filterRangeArray[indexPath.row].filterRange.upperBound)"
+        cell.clearButton.isHidden = true
+        
+        //pass info for filtering
+        cell.filterName = filterRangeArray[indexPath.row].filterName
+        cell.seeNumButton = seeNumButton
+        cell.clearAll = clearAll
+        cell.fixedMin = filterRangeArray[indexPath.row].filterRange.lowerBound
+        cell.fixedMax = filterRangeArray[indexPath.row].filterRange.upperBound
 
         return cell
     }
@@ -177,6 +268,8 @@ class ViewControllerFitler: UIViewController, UITableViewDataSource, UITableView
     }
 }
 
+
+//To create a range with a name, this ends up showing up in each cell
 class filters{
     let filterRange: ClosedRange<Int>
     var filterName: String
