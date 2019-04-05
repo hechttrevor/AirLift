@@ -28,7 +28,8 @@ class ViewControllerFitler: UIViewController, UITableViewDataSource, UITableView
     static var maxSpeedIsCleared = true
     static var maxRangeIntArray = [Aircraft]()
     static var maxRangeIntIsCleared = true
-    
+    static var currentArray = [Aircraft]()
+    var fullReload = true
     
     
     
@@ -50,7 +51,9 @@ class ViewControllerFitler: UIViewController, UITableViewDataSource, UITableView
     
     
     @IBAction func onClickSeeAircrafts(_ sender: Any) {
-        ViewControllerTable.currentAircraftArray = ViewControllerFitler.finalArray
+        ViewControllerFitler.currentArray = ViewControllerFitler.finalArray
+        ViewControllerTable.isFiltered = true
+        //ViewControllerTable.filterCurrentArray = ViewControllerFitler.finalArray
         //performSegue(withIdentifier: "tableSegue", sender: self)
     }
     
@@ -145,17 +148,13 @@ class ViewControllerFitler: UIViewController, UITableViewDataSource, UITableView
         let range = filterRangeArray[indexPath.row].filterRange.upperBound - filterRangeArray[indexPath.row].filterRange.lowerBound
         //round the range to the nearest 10, then divide by 10
         let stepValue = 10*(round(Double(range/10)))/10
-        //Set up our range slider
+        //Set up our range slider min/max and stepValue
         cell.rangeSlider.minimumValue = Double(filterRangeArray[indexPath.row].filterRange.lowerBound)
         cell.rangeSlider.maximumValue = Double(filterRangeArray[indexPath.row].filterRange.upperBound)
-        cell.rangeSlider.lowerValue = Double(filterRangeArray[indexPath.row].filterRange.lowerBound)
-        cell.rangeSlider.upperValue = Double(filterRangeArray[indexPath.row].filterRange.upperBound)
         cell.rangeSlider.stepValue =  stepValue
+        
         //Set up our text labels
         cell.filterNames.text = filterRangeArray[indexPath.row].filterName
-        cell.curMin.text = "\(filterRangeArray[indexPath.row].filterRange.lowerBound)"
-        cell.curMax.text = "\(filterRangeArray[indexPath.row].filterRange.upperBound)"
-        cell.clearButton.isHidden = true
         
         //pass info for filtering
         cell.filterName = filterRangeArray[indexPath.row].filterName
@@ -163,6 +162,16 @@ class ViewControllerFitler: UIViewController, UITableViewDataSource, UITableView
         cell.clearAll = clearAll
         cell.fixedMin = filterRangeArray[indexPath.row].filterRange.lowerBound
         cell.fixedMax = filterRangeArray[indexPath.row].filterRange.upperBound
+        
+        if fullReload{
+            cell.rangeSlider.lowerValue = Double(filterRangeArray[indexPath.row].filterRange.lowerBound)
+            cell.rangeSlider.upperValue = Double(filterRangeArray[indexPath.row].filterRange.upperBound)
+            cell.curMin.text = "\(filterRangeArray[indexPath.row].filterRange.lowerBound)"
+            cell.curMax.text = "\(filterRangeArray[indexPath.row].filterRange.upperBound)"
+            cell.clearButton.isHidden = true
+        }else{
+    
+        }
 
         return cell
     }

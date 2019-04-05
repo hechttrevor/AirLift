@@ -25,6 +25,7 @@ class TableViewCellSlider: UITableViewCell {
     var fixedMin: Int!
     var fixedMax: Int!
     
+    
     override func awakeFromNib() {
         super.awakeFromNib()
     }
