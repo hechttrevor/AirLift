@@ -24,6 +24,13 @@ class TableViewCellSlider: UITableViewCell {
     var filterName: String!
     var fixedMin: Int!
     var fixedMax: Int!
+    var currentMin: Int!
+    var currentMax: Int!
+    var index: Int!
+    
+    
+    var curFilter: filters!
+    
     
     
     override func awakeFromNib() {
@@ -39,23 +46,24 @@ class TableViewCellSlider: UITableViewCell {
     @IBAction func rangeSliderChanged(_ sender: RangeSlider) {
         curMin.text = "\(Int(rangeSlider.lowerValue))"
         curMax.text = "\(Int(rangeSlider.upperValue))"
-        let currMin = Int(rangeSlider.lowerValue)
-        let currMax = Int(rangeSlider.upperValue)
-//        let range = Int(rangeSlider.lowerValue)...Int(rangeSlider.upperValue)
-        ViewControllerFitler().setNumAircrafts(curMin: currMin,curMax: currMax, button: seeNumButton, filterName: filterName)
+
+        curFilter.curMin = Int(rangeSlider.lowerValue)
+        curFilter.curMax = Int(rangeSlider.upperValue)
+
+        ViewControllerFitler().setNumAircrafts(curFilter: curFilter, button: seeNumButton, index: index)
+        ViewControllerFitler().updateCurMinMax(curFilter: curFilter)
+        
         self.clearButton.isHidden = false
         self.clearAll.isHidden = false
     }
     @IBAction func onClickClearButton(_ sender: UIButton) {
         
-        ViewControllerFitler().clearButtonClicked(button: seeNumButton, clearAllButton: clearAll, filterName: filterName)
+        ViewControllerFitler().clearButtonClicked(button: seeNumButton, clearAllButton: clearAll, filterName: filterName, index: index)
         
         rangeSlider.lowerValue = Double(fixedMin)
         rangeSlider.upperValue = Double(fixedMax)
         curMin.text = "\(Int(rangeSlider.lowerValue))"
         curMax.text = "\(Int(rangeSlider.upperValue))"
-
-        
-        self.clearButton.isHidden = true
+        clearButton.isHidden = true
     }
 }

@@ -12,72 +12,130 @@ import SwiftRangeSlider
 
 class ViewControllerFitler: UIViewController, UITableViewDataSource, UITableViewDelegate{
     
-    
-  
     @IBOutlet weak var table: UITableView!
     @IBOutlet weak var clearAll: UIButton!
-    
     @IBOutlet weak var seeNumButton: UIButton!
-    var filterRangeArray = [filters]()
-    var aircraftArray =  [Aircraft]()// ViewControllerTable.filterAircraftArray
-    static var fixedArray = [Aircraft]()
-    static var finalArray = [Aircraft]()
-    static var cruiseSpeedArray = [Aircraft]()
-    static var cruiseSpeedIsCleared = true
-    static var maxSpeedArray = [Aircraft]()
-    static var maxSpeedIsCleared = true
-    static var maxRangeIntArray = [Aircraft]()
-    static var maxRangeIntIsCleared = true
-    static var currentArray = [Aircraft]()
-    var fullReload = true
     
+    static var filterRangeArray = [filters]()
     
-    
+    var aircraftArray =  [Aircraft]()
+    static var fixedArray = [Aircraft]() //static version of aircraftArray
+    static var finalArray = [Aircraft]() //sent back to main tableView
+    static var currentArray = [Aircraft]() //used for searching in main tableView
 
+    static var fullReload = true
+    static var firstTime = true
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        resetAllArrays()
-        getMinMaxFromAircraftArray()
-
+        ViewControllerFitler.fixedArray = aircraftArray
+        //Should only run the first time you get to filterView
+        if ViewControllerFitler.firstTime{
+            getMinMaxFromAircraftArray()
+            ViewControllerFitler.firstTime = false
+        }
+        if ViewControllerFitler.fullReload{
+            resetAircraftArrays()
+        }
+        checkAllClear(clearAllButton: clearAll)
+        seeNumButton.setTitle("See \(ViewControllerFitler.finalArray.count) aircrafts", for: .normal)
     }
     
     
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        let vc = segue.destination as! UINavigationController
-//        vc.currentAircraftArray = ViewControllerFitler.finalArray
-//    }
-    
-    
-    
+//onClick mainButton ****************************************************************************************************
     @IBAction func onClickSeeAircrafts(_ sender: Any) {
         ViewControllerFitler.currentArray = ViewControllerFitler.finalArray
         ViewControllerTable.isFiltered = true
-        //ViewControllerTable.filterCurrentArray = ViewControllerFitler.finalArray
-        //performSegue(withIdentifier: "tableSegue", sender: self)
     }
     
-    func resetAllArrays(){
-        ViewControllerFitler.fixedArray = aircraftArray
+//clear button functions**************************************************************************************************
+    @IBAction func onClickClearAll(_ sender: UIButton) {
+        resetAircraftArrays()
+        resestFilterArray()
+        ViewControllerFitler.fullReload = true
+        table.reloadData()
+    }
+    //Sets the cleared array back to original array
+    func clearButtonClicked(button: UIButton, clearAllButton: UIButton, filterName: String, index: Int){
+        ViewControllerFitler.filterRangeArray[index].isCleared = true
+        //reset aircraft array
+        ViewControllerFitler.filterRangeArray[index].aircraftArray = ViewControllerFitler.fixedArray
+        //Reset filter array
+        ViewControllerFitler.filterRangeArray[index].curMin = ViewControllerFitler.filterRangeArray[index].setMin
+       
+        compareArrays(button: button)
+        checkAllClear(clearAllButton: clearAllButton)
+    }
+    
+    //Hide Clear all button if all cells are cleared
+    func checkAllClear(clearAllButton: UIButton){
+        var notAllCleared = true
+        for i in 0...ViewControllerFitler.filterRangeArray.count - 1{
+            if !ViewControllerFitler.filterRangeArray[i].isCleared {
+                notAllCleared = false
+            }
+        }
+        if notAllCleared{
+            clearAllButton.isHidden = true
+            ViewControllerFitler.fullReload = true
+        }
+    }
+    
+// Filtering Functions (returns a final array with the aircrafts that have the right values)******************************
+    func resetAircraftArrays(){
         ViewControllerFitler.finalArray = aircraftArray
-        ViewControllerFitler.cruiseSpeedArray = aircraftArray
-        ViewControllerFitler.maxSpeedArray = aircraftArray
-        ViewControllerFitler.maxRangeIntArray = aircraftArray
+        for i in 0...ViewControllerFitler.filterRangeArray.count - 1{
+            ViewControllerFitler.filterRangeArray[i].aircraftArray = aircraftArray
+        }
         seeNumButton.setTitle("See \(ViewControllerFitler.finalArray.count) aircrafts", for: .normal)
         clearAll.isHidden = true
     }
     
-    @IBAction func onClickClearAll(_ sender: UIButton) {
-        resetAllArrays()
-        table.reloadData()
+    func resestFilterArray(){
+        for index in ViewControllerFitler.filterRangeArray{
+            index.curMin = index.setMin
+            index.curMax = index.setMax
+            index.isCleared = true
+        }
     }
     
-    func compareArraysAndSetButton(button: UIButton){
+    
+//rangeSlider listener functions *****************************************************************************************
+    //stores min/max values for table.reloadData()
+    func updateCurMinMax(curFilter: filters){
+        var count = 0
+        for index in ViewControllerFitler.filterRangeArray{
+            if index.filterName == curFilter.filterName{
+                ViewControllerFitler.filterRangeArray[count] = curFilter
+            }
+            count += 1
+        }
+        ViewControllerFitler.fullReload = false
+    }
+    //changes the filter's AIRCRAFT ARRAY
+    func setNumAircrafts(curFilter: filters, button: UIButton, index: Int){
+        ViewControllerFitler.filterRangeArray[index].isCleared = false
+        ViewControllerFitler.filterRangeArray[index].aircraftArray = ViewControllerFitler.fixedArray.filter { (aircraft) -> Bool in
+            return (aircraft.attribute[index] >= curFilter.curMin && aircraft.attribute[0] <= curFilter.curMax)
+        }
+        compareArrays(button: button)
+    }
+    
+    
+    //does the actual comparing of aircraft arrays
+    func compareArrays(button: UIButton){
         //compares all arrays and outputs array that shares values in every array
-        ViewControllerFitler.finalArray = ViewControllerFitler.cruiseSpeedArray.filter(ViewControllerFitler.maxSpeedArray.contains)
-        ViewControllerFitler.finalArray = ViewControllerFitler.finalArray.filter(ViewControllerFitler.maxRangeIntArray.contains)
-        
-        //Outputs 3 cases onto the button
+        ViewControllerFitler.finalArray = ViewControllerFitler.filterRangeArray[0].aircraftArray.filter(ViewControllerFitler.filterRangeArray[1].aircraftArray.contains)
+        for i in 2...ViewControllerFitler.filterRangeArray.count - 1{
+            
+        ViewControllerFitler.finalArray = ViewControllerFitler.finalArray.filter(ViewControllerFitler.filterRangeArray[i].aircraftArray.contains)
+        }
+         setButton(button: button)
+    }
+    //sets the main button with number of aircraft options
+    func setButton(button: UIButton){
         if ViewControllerFitler.finalArray.count > 1{
             button.setTitle("See \(ViewControllerFitler.finalArray.count) aircrafts", for: .normal)
         } else if ViewControllerFitler.finalArray.count == 1{
@@ -85,206 +143,151 @@ class ViewControllerFitler: UIViewController, UITableViewDataSource, UITableView
         } else if ViewControllerFitler.finalArray.count == 0{
             button.setTitle("No aircrafts with these attributes", for: .normal)
         }
-        
-    }
-    
-
-    //Sets the certain array back to fixedArray
-    func clearButtonClicked(button: UIButton, clearAllButton: UIButton, filterName: String){
-        if filterName == "Cruise Speed (mph)"{
-            ViewControllerFitler.cruiseSpeedIsCleared = true
-            ViewControllerFitler.cruiseSpeedArray = ViewControllerFitler.fixedArray
-        }else if filterName == "Max Speed (mph)"{
-            ViewControllerFitler.maxSpeedIsCleared = true
-            ViewControllerFitler.maxSpeedArray = ViewControllerFitler.fixedArray
-        }else if filterName == "Max Range Int (mi)"{
-            ViewControllerFitler.maxRangeIntArray = ViewControllerFitler.fixedArray
-        }
-        compareArraysAndSetButton(button: button)
-       
-        //Hide Clear all button if all cells are cleared
-        if ViewControllerFitler.cruiseSpeedIsCleared && ViewControllerFitler.maxSpeedIsCleared && ViewControllerFitler.maxSpeedIsCleared {
-            clearAllButton.isHidden = true
-        }
-    }
-    
-    
-    //fitlers array based off the change in rangeSlider
-    func setNumAircrafts(curMin: Int,curMax: Int, button: UIButton, filterName: String){
-        //FIGURE OUT HOW TO MAKE THIS WORK FOR EACH ATTRIBUTE
-        if filterName == "Cruise Speed (mph)"{
-            ViewControllerFitler.cruiseSpeedIsCleared = false
-            ViewControllerFitler.cruiseSpeedArray = ViewControllerFitler.fixedArray.filter { (aircraft) -> Bool in
-                return (aircraft.cruiseSpeed >= curMin && aircraft.cruiseSpeed <= curMax)
-            }
-        }
-        if filterName == "Max Speed (mph)"{
-            ViewControllerFitler.maxSpeedIsCleared = false
-            ViewControllerFitler.maxSpeedArray = ViewControllerFitler.fixedArray.filter { (aircraft) -> Bool in
-                return (aircraft.maxSpeed >= curMin && aircraft.maxSpeed <= curMax)
-            }
-        }
-        if filterName == "Max Range Int (mi)"{
-            ViewControllerFitler.maxRangeIntIsCleared = false
-            ViewControllerFitler.maxRangeIntArray = ViewControllerFitler.fixedArray.filter { (aircraft) -> Bool in
-                return (aircraft.maxRangeInt >= curMin && aircraft.maxRangeInt <= curMax)
-            }
-        }
-        compareArraysAndSetButton(button: button)
     }
 
-    
     
 //TABLE VIEW SET UP ***********************************************************************************************
     //set row count
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return filterRangeArray.count
+        return ViewControllerFitler.filterRangeArray.count
     }
     //add everything in the cell
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell1") as? TableViewCellSlider else{
             return UITableViewCell()
         }
-        let range = filterRangeArray[indexPath.row].filterRange.upperBound - filterRangeArray[indexPath.row].filterRange.lowerBound
-        //round the range to the nearest 10, then divide by 10
-        let stepValue = 10*(round(Double(range/10)))/10
-        //Set up our range slider min/max and stepValue
-        cell.rangeSlider.minimumValue = Double(filterRangeArray[indexPath.row].filterRange.lowerBound)
-        cell.rangeSlider.maximumValue = Double(filterRangeArray[indexPath.row].filterRange.upperBound)
-        cell.rangeSlider.stepValue =  stepValue
+        //give the cell class some values
+        cell.curFilter = ViewControllerFitler.filterRangeArray[indexPath.row]
+        cell.fixedMin = cell.curFilter.setMin
+        cell.fixedMax = cell.curFilter.setMax
+        cell.filterName = cell.curFilter.filterName
+        cell.index = indexPath.row
         
-        //Set up our text labels
-        cell.filterNames.text = filterRangeArray[indexPath.row].filterName
+        //initialize rangeSlider
+        cell.rangeSlider.minimumValue = Double(cell.fixedMin)
+        cell.rangeSlider.maximumValue = Double(cell.fixedMax)
+        cell.rangeSlider.stepValue =  10 * (round(Double((cell.fixedMax - cell.fixedMin)/15)))/10
+        cell.filterNames.text = cell.filterName
         
-        //pass info for filtering
-        cell.filterName = filterRangeArray[indexPath.row].filterName
+        //Set reference to buttons
         cell.seeNumButton = seeNumButton
         cell.clearAll = clearAll
-        cell.fixedMin = filterRangeArray[indexPath.row].filterRange.lowerBound
-        cell.fixedMax = filterRangeArray[indexPath.row].filterRange.upperBound
         
-        if fullReload{
-            cell.rangeSlider.lowerValue = Double(filterRangeArray[indexPath.row].filterRange.lowerBound)
-            cell.rangeSlider.upperValue = Double(filterRangeArray[indexPath.row].filterRange.upperBound)
-            cell.curMin.text = "\(filterRangeArray[indexPath.row].filterRange.lowerBound)"
-            cell.curMax.text = "\(filterRangeArray[indexPath.row].filterRange.upperBound)"
+        //check whether or not to show clear button
+        if ViewControllerFitler.filterRangeArray[indexPath.row].isCleared {
             cell.clearButton.isHidden = true
         }else{
-    
+            cell.clearButton.isHidden = false
         }
-
+        
+        //This determines if we reset to original state OR recent state
+        if ViewControllerFitler.fullReload{
+            print("fulll relaod")
+            cell.rangeSlider.lowerValue = Double(ViewControllerFitler.filterRangeArray[indexPath.row].setMin)
+            cell.rangeSlider.upperValue = Double(ViewControllerFitler.filterRangeArray[indexPath.row].setMax)
+            cell.curMin.text = "\(ViewControllerFitler.filterRangeArray[indexPath.row].setMin)"
+            cell.curMax.text = "\(ViewControllerFitler.filterRangeArray[indexPath.row].setMax)"
+        }else{
+            print("recent reload")
+            cell.rangeSlider.lowerValue = Double(ViewControllerFitler.filterRangeArray[indexPath.row].curMin)
+            cell.rangeSlider.upperValue = Double(ViewControllerFitler.filterRangeArray[indexPath.row].curMax)
+            cell.curMin.text = "\(ViewControllerFitler.filterRangeArray[indexPath.row].curMin)"
+            cell.curMax.text = "\(ViewControllerFitler.filterRangeArray[indexPath.row].curMax)"
+        }
         return cell
     }
     //sets size of the cell
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 200
     }
+
     
-    //CALCULATE ALL RANGES ***********************************************************************************************
+//CALCULATE ALL RANGES **************************************************************************************************
     func getMinMaxFromAircraftArray(){
+  
         //Initialize attributes min/max to first val in array
-        var cruiseSpeedMin = aircraftArray[0].cruiseSpeed, cruiseSpeedMax = cruiseSpeedMin
-        var maxSpeedMin =  aircraftArray[0].maxSpeed, maxSpeedMax = maxSpeedMin
-        var maxRangeIntMin = aircraftArray[0].maxRangeInt, maxRangeIntMax = maxRangeIntMin
-        var maxRangeExtMin = aircraftArray[0].maxRangeExt, maxRangeExtMax = maxRangeExtMin
-        var maxLoadMin = aircraftArray[0].maxLoad, maxLoadMax =  maxLoadMin
-        var paxLittersMin = aircraftArray[0].paxLitters, paxLittersMax = paxLittersMin
-        var singleLoadCapacityMin = aircraftArray[0].singleLoadCapacity, singleLoadCapacityMax = singleLoadCapacityMin
-        var internalFuelMin = aircraftArray[0].internalFuel, internalFuelMax = internalFuelMin
-        // TO DO:   var serviceCeilingMin: Double
-        //    var takeoffRunwayMin: Double
-        //    var landingRunwayMin: Double
+        let cruiseSpeed = aircraftArray[0].cruiseSpeed
+        let maxSpeed =  aircraftArray[0].maxSpeed
+        let maxRangeInt = aircraftArray[0].maxRangeInt
+        let maxRangeExt = aircraftArray[0].maxRangeExt
+        let maxLoad = aircraftArray[0].maxLoad
+        let paxLitters = aircraftArray[0].paxLitters
+        let singleLoadCapacity = aircraftArray[0].singleLoadCapacity
+        let internalFuel = aircraftArray[0].internalFuel
+        let serviceCeiling = aircraftArray[0].serviceCeiling
+        let takeoffRunway = aircraftArray[0].takeoffRunway
+        let landingRunway = aircraftArray[0].landingRunway
+        // TO DO:
         //   let crew: ClosedRange<Int>
         //  let paxSeated: ClosedRange<Int>
         //let inFlightRefuel: Bool
          //  let verticalLift: Bool
-    //these loops are to make sure the first value are not null
-        for index in (1...aircraftArray.count-1){
-            if cruiseSpeedMin != -1{break}
-            else{cruiseSpeedMin = aircraftArray[index+1].cruiseSpeed}
-        }
-        for index in (1...aircraftArray.count-1){
-            if maxRangeIntMin != -1{break}
-            else{maxRangeIntMin = aircraftArray[index+1].maxRangeInt}
-        }
-        for index in (1...aircraftArray.count-1){
-            if maxRangeExtMin != -1{break}
-            else{maxRangeExtMin = aircraftArray[index+1].maxRangeExt}
-        }
-        for index in (1...aircraftArray.count-1){
-            if maxLoadMin != -1{break}
-            else{maxLoadMin = aircraftArray[index+1].maxLoad}
-        }
-        for index in (1...aircraftArray.count-1){
-            if paxLittersMin != -1{break}
-            else{paxLittersMin = aircraftArray[index+1].paxLitters}
-        }
-        for index in (1...aircraftArray.count-1){
-            if singleLoadCapacityMin != -1{break}
-            else{singleLoadCapacityMin = aircraftArray[index+1].singleLoadCapacity}
-        }
-        for index in (1...aircraftArray.count-1){
-            if internalFuelMin != -1{break}
-            else{internalFuelMin = aircraftArray[index+1].internalFuel}
+        
+        //Set the filter arrays with the min and max of all aircraft attributes
+        ViewControllerFitler.filterRangeArray.append(filters(filterName: "Cruise Speed (mph)", setMin: cruiseSpeed, setMax: cruiseSpeed, curMin: cruiseSpeed, curMax: cruiseSpeed, aircraftArray: aircraftArray, isCleared: true))
+        ViewControllerFitler.filterRangeArray.append(filters(filterName: "Max Speed (mph)", setMin: maxSpeed, setMax: maxSpeed, curMin: maxSpeed,curMax: maxSpeed,aircraftArray: aircraftArray, isCleared: true))
+        ViewControllerFitler.filterRangeArray.append(filters( filterName: "Max Range Int (mi)", setMin: maxRangeInt, setMax: maxRangeInt, curMin: maxRangeInt,curMax: maxRangeInt, aircraftArray: aircraftArray, isCleared: true))
+        ViewControllerFitler.filterRangeArray.append(filters(filterName: "Max Range Ext (mi)", setMin: maxRangeExt, setMax: maxRangeExt, curMin: maxRangeExt,curMax: maxRangeExt, aircraftArray: aircraftArray, isCleared: true))
+        ViewControllerFitler.filterRangeArray.append(filters(filterName: "Max Load (lbs)", setMin: maxLoad, setMax: maxLoad, curMin: maxLoad,curMax: maxLoad, aircraftArray: aircraftArray, isCleared: true))
+        ViewControllerFitler.filterRangeArray.append(filters(filterName: "Pax Litters", setMin: paxLitters, setMax: paxLitters, curMin: paxLitters,curMax: paxLitters, aircraftArray: aircraftArray, isCleared: true))
+        ViewControllerFitler.filterRangeArray.append(filters(filterName: "Single Load Capacity", setMin: singleLoadCapacity, setMax: singleLoadCapacity, curMin: singleLoadCapacity,curMax: singleLoadCapacity, aircraftArray: aircraftArray, isCleared: true))
+        ViewControllerFitler.filterRangeArray.append(filters( filterName: "Internal Fuel",setMin: internalFuel, setMax: internalFuel, curMin: internalFuel, curMax: internalFuel, aircraftArray: aircraftArray, isCleared: true))
+        ViewControllerFitler.filterRangeArray.append(filters( filterName: "Service Ceiling",setMin: serviceCeiling, setMax: serviceCeiling, curMin: serviceCeiling, curMax: serviceCeiling, aircraftArray: aircraftArray, isCleared: true))
+        ViewControllerFitler.filterRangeArray.append(filters( filterName: "Take Off Runway (ft)",setMin: takeoffRunway, setMax: takeoffRunway, curMin: takeoffRunway, curMax: landingRunway, aircraftArray: aircraftArray, isCleared: true))
+        ViewControllerFitler.filterRangeArray.append(filters( filterName: "Landing Runway (ft)",setMin: landingRunway, setMax: landingRunway, curMin: landingRunway, curMax: landingRunway, aircraftArray: aircraftArray, isCleared: true))
+        
+        
+
+    //these loops are to make sure the first value are not nullZ
+        var count = 0
+        for index in ViewControllerFitler.filterRangeArray {
+            for aircraftItorator in (0...aircraftArray.count-2){
+                if index.curMin != -1{ break}
+                //if value is not null, we're set
+                else{
+                    index.curMin = aircraftArray[aircraftItorator + 1].attribute[count]
+                    index.setMin = aircraftArray[aircraftItorator + 1].attribute[count]
+                }
+            }
+            count += 1
         }
         
+        
     //Set the min and max for each attribute
-        for index in aircraftArray{
-            if (index.cruiseSpeed != -1) && (index.cruiseSpeed < cruiseSpeedMin) {
-                cruiseSpeedMin = index.cruiseSpeed
-            }else if index.cruiseSpeed > cruiseSpeedMax{
-                cruiseSpeedMax = index.cruiseSpeed
+        count = 0
+        for index in ViewControllerFitler.filterRangeArray {
+            for aircraftItorator in aircraftArray{
+                if aircraftItorator.attribute[count] < index.curMin && aircraftItorator.attribute[count] != -1 {
+                    index.curMin = aircraftItorator.attribute[count]
+                    index.setMin = aircraftItorator.attribute[count]
+                    }else if aircraftItorator.attribute[count] > index.curMax{
+                        index.curMax = aircraftItorator.attribute[count]
+                        index.setMax = aircraftItorator.attribute[count]
+                }
             }
-            else if (index.maxSpeed != -1) && (index.maxSpeed < maxSpeedMin){
-                maxSpeedMin = index.maxSpeed
-            }else if index.maxSpeed > maxSpeedMax{
-                maxSpeedMax = index.maxSpeed
-            }else if (index.maxRangeInt != -1) && (index.maxRangeInt < maxRangeIntMin){
-                maxRangeIntMin = index.maxRangeInt
-            }else if index.maxRangeInt > maxRangeIntMax{
-                maxRangeIntMax = index.maxRangeInt
-            }else if (index.maxRangeExt != -1) && (index.maxRangeExt < maxRangeExtMin){
-                maxRangeExtMin = index.maxRangeExt
-            }else if index.maxRangeExt > maxRangeExtMax{
-                maxRangeExtMax = index.maxRangeExt
-            }else if (index.maxLoad != -1) && (index.maxLoad < maxLoadMin){
-                maxLoadMin = index.maxLoad
-            }else if index.maxLoad > maxLoadMax{
-                maxLoadMax = index.maxLoad
-            }else if (index.paxLitters != -1) && (index.paxLitters < paxLittersMin){
-                paxLittersMin = index.paxLitters
-            }else if index.paxLitters > paxLittersMax{
-                paxLittersMax = index.paxLitters
-            }else if (index.singleLoadCapacity != -1) && (index.singleLoadCapacity < singleLoadCapacityMin){
-                singleLoadCapacityMin = index.singleLoadCapacity
-            }else if index.singleLoadCapacity > singleLoadCapacityMax{
-                singleLoadCapacityMax = index.singleLoadCapacity
-            }else if (index.internalFuel != -1) && (index.internalFuel < internalFuelMin){
-                internalFuelMin = index.internalFuel
-            }else if index.internalFuel > internalFuelMax{
-                internalFuelMax = index.internalFuel
-            }
+            count += 1
         }
-        //Set the filter arrays with the min and max of all aircraft attributes
-        filterRangeArray.append(filters(filterRange: cruiseSpeedMin...cruiseSpeedMax, filterName: "Cruise Speed (mph)"))
-        filterRangeArray.append(filters(filterRange: maxSpeedMin...maxSpeedMax, filterName: "Max Speed (mph)"))
-        filterRangeArray.append(filters(filterRange: maxRangeIntMin...maxRangeIntMax, filterName: "Max Range Int (mi)"))
-        filterRangeArray.append(filters(filterRange: maxRangeExtMin...maxRangeExtMax, filterName: "Max Range Ext (mi)"))
-        filterRangeArray.append(filters(filterRange: maxLoadMin...maxLoadMax, filterName: "Max Load (lbs)"))
-        filterRangeArray.append(filters(filterRange: paxLittersMin...paxLittersMax, filterName: "Pax Litters"))
-        filterRangeArray.append(filters(filterRange: singleLoadCapacityMin...singleLoadCapacityMax, filterName: "Single Load Capacity"))
-        //filterRangeArray.append(filters(filterRange: internalFuelMin...internalFuelMax, filterName: "Internal Fuel"))
     }
 }
-
+        
 
 //To create a range with a name, this ends up showing up in each cell
 class filters{
-    let filterRange: ClosedRange<Int>
     var filterName: String
+    var setMin: Int
+    var setMax: Int
+    var curMin: Int
+    var curMax: Int
+    var aircraftArray: [Aircraft]
+    var isCleared: Bool
     
-    init(filterRange: ClosedRange<Int>,filterName: String){
-        self.filterRange = filterRange
+    init(filterName: String, setMin: Int, setMax: Int, curMin: Int, curMax: Int, aircraftArray: [Aircraft], isCleared: Bool){
         self.filterName = filterName
+        self.setMin = setMin
+        self.setMax = setMax
+        self.curMin = curMin
+        self.curMax = curMax
+        self.aircraftArray = aircraftArray
+        self.isCleared = isCleared
     }
 }

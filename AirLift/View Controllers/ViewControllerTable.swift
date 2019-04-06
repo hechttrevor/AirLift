@@ -37,6 +37,9 @@ class ViewControllerTable: UIViewController, UITableViewDataSource, UITableViewD
         if (segue.identifier == "filterSegue"){
             let vc = segue.destination as! ViewControllerFitler
             vc.aircraftArray = self.fullArray
+             if ViewControllerTable.isFiltered{
+                ViewControllerFitler.fullReload = false
+            }
         }
         if (segue.identifier == "infoSegue"){
             let vc = segue.destination as! ViewControllerInfoCard
@@ -230,8 +233,11 @@ class ViewControllerTable: UIViewController, UITableViewDataSource, UITableViewD
                 let takeoffRunway = snapValues?["takeoffRunway"] as? Int ?? -1
                 let landingRunway = snapValues?["landingRunway"] as? Int ?? -1
                 
+                
+                
+                let attribute = [cruiseSpeed, maxSpeed, maxRangeInt, maxRangeExt, maxLoad, paxLitters, singleLoadCapacity, internalFuel, serviceCeiling, takeoffRunway, landingRunway]
             //Add each element of each child to Aircraft array
-                self.aircraftArray.append(Aircraft.init(modelNumber: modelNumber, commonName: commonName,otherName: otherName, cruiseSpeed: cruiseSpeed, maxSpeed: maxSpeed, maxRangeInt: maxRangeInt, maxRangeExt: maxRangeExt, maxLoad: maxLoad, crew: minCrew...maxCrew, paxSeated: paxSeatedMin...paxSeatedMax, paxLitters: paxLitters, singleLoadCapacity: singleLoadCapacity, internalFuel: internalFuel, serviceCeiling: serviceCeiling, inFlightRefuel: inFlightRefuel, takeoffRunway: takeoffRunway, landingRunway: landingRunway, photoURL: photoURL, verticalLift: verticalLift))
+                self.aircraftArray.append(Aircraft.init(modelNumber: modelNumber, commonName: commonName,otherName: otherName, cruiseSpeed: cruiseSpeed, maxSpeed: maxSpeed, maxRangeInt: maxRangeInt, maxRangeExt: maxRangeExt, maxLoad: maxLoad, crew: minCrew...maxCrew, paxSeated: paxSeatedMin...paxSeatedMax, paxLitters: paxLitters, singleLoadCapacity: singleLoadCapacity, internalFuel: internalFuel, serviceCeiling: serviceCeiling, inFlightRefuel: inFlightRefuel, takeoffRunway: takeoffRunway, landingRunway: landingRunway, photoURL: photoURL, verticalLift: verticalLift, attribute: attribute))
                 self.currentAircraftArray = self.aircraftArray
             }
         }) { (error) in

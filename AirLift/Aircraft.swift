@@ -35,11 +35,13 @@ class Aircraft: NSObject { //modelNumber, commonName, otherName, cruiseSpeed, ma
     let inFlightRefuel: Bool
     let verticalLift: Bool
     
+    var attribute = [Int]()
+    
     
     
     // STILL NEED TO ADD: VerticalAirlift : Bool 
     
-    init(modelNumber: String, commonName: String, otherName: String, cruiseSpeed:Int, maxSpeed: Int, maxRangeInt: Int, maxRangeExt: Int, maxLoad: Int, crew: ClosedRange<Int>, paxSeated: ClosedRange<Int>, paxLitters: Int, singleLoadCapacity: Int, internalFuel: Int, serviceCeiling: Int, inFlightRefuel: Bool, takeoffRunway: Int, landingRunway: Int, photoURL: String?, verticalLift: Bool) {
+    init(modelNumber: String, commonName: String, otherName: String, cruiseSpeed:Int, maxSpeed: Int, maxRangeInt: Int, maxRangeExt: Int, maxLoad: Int, crew: ClosedRange<Int>, paxSeated: ClosedRange<Int>, paxLitters: Int, singleLoadCapacity: Int, internalFuel: Int, serviceCeiling: Int, inFlightRefuel: Bool, takeoffRunway: Int, landingRunway: Int, photoURL: String?, verticalLift: Bool, attribute: [Int]) {
         self.modelNumber = modelNumber
         self.commonName = commonName
         self.otherName = otherName
@@ -59,6 +61,7 @@ class Aircraft: NSObject { //modelNumber, commonName, otherName, cruiseSpeed, ma
         self.landingRunway = landingRunway
         self.photoURL = photoURL
         self.verticalLift = verticalLift
+        self.attribute = attribute
     }
     
     
