@@ -30,9 +30,9 @@ class ViewControllerFitler: UIViewController, UITableViewDataSource, UITableView
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        ViewControllerFitler.fixedArray = aircraftArray
         //Should only run the first time you get to filterView
         if ViewControllerFitler.firstTime{
+            ViewControllerFitler.fixedArray = aircraftArray
             getMinMaxFromAircraftArray()
             ViewControllerFitler.firstTime = false
         }
@@ -40,8 +40,10 @@ class ViewControllerFitler: UIViewController, UITableViewDataSource, UITableView
             resetAircraftArrays()
         }
         checkAllClear(clearAllButton: clearAll)
+        compareArrays(button: seeNumButton)
         seeNumButton.setTitle("See \(ViewControllerFitler.finalArray.count) aircrafts", for: .normal)
     }
+    
     
     
 //onClick mainButton ****************************************************************************************************
@@ -85,9 +87,9 @@ class ViewControllerFitler: UIViewController, UITableViewDataSource, UITableView
     
 // Filtering Functions (returns a final array with the aircrafts that have the right values)******************************
     func resetAircraftArrays(){
-        ViewControllerFitler.finalArray = aircraftArray
+        ViewControllerFitler.finalArray = ViewControllerFitler.fixedArray
         for i in 0...ViewControllerFitler.filterRangeArray.count - 1{
-            ViewControllerFitler.filterRangeArray[i].aircraftArray = aircraftArray
+            ViewControllerFitler.filterRangeArray[i].aircraftArray =  ViewControllerFitler.fixedArray
         }
         seeNumButton.setTitle("See \(ViewControllerFitler.finalArray.count) aircrafts", for: .normal)
         clearAll.isHidden = true
@@ -118,7 +120,7 @@ class ViewControllerFitler: UIViewController, UITableViewDataSource, UITableView
     func setNumAircrafts(curFilter: filters, button: UIButton, index: Int){
         ViewControllerFitler.filterRangeArray[index].isCleared = false
         ViewControllerFitler.filterRangeArray[index].aircraftArray = ViewControllerFitler.fixedArray.filter { (aircraft) -> Bool in
-            return (aircraft.attribute[index] >= curFilter.curMin && aircraft.attribute[0] <= curFilter.curMax)
+            return (aircraft.attribute[index] >= curFilter.curMin && aircraft.attribute[index] <= curFilter.curMax)
         }
         compareArrays(button: button)
     }
@@ -130,18 +132,19 @@ class ViewControllerFitler: UIViewController, UITableViewDataSource, UITableView
         ViewControllerFitler.finalArray = ViewControllerFitler.filterRangeArray[0].aircraftArray.filter(ViewControllerFitler.filterRangeArray[1].aircraftArray.contains)
         for i in 2...ViewControllerFitler.filterRangeArray.count - 1{
             
-        ViewControllerFitler.finalArray = ViewControllerFitler.finalArray.filter(ViewControllerFitler.filterRangeArray[i].aircraftArray.contains)
+            ViewControllerFitler.finalArray = ViewControllerFitler.finalArray.filter(ViewControllerFitler.filterRangeArray[i].aircraftArray.contains)
         }
-         setButton(button: button)
+        setButton(button: button)
     }
+    
     //sets the main button with number of aircraft options
     func setButton(button: UIButton){
         if ViewControllerFitler.finalArray.count > 1{
-            button.setTitle("See \(ViewControllerFitler.finalArray.count) aircrafts", for: .normal)
+            button.setTitle("See \(ViewControllerFitler.finalArray.count) Aircrafts", for: .normal)
         } else if ViewControllerFitler.finalArray.count == 1{
-            button.setTitle("See \(ViewControllerFitler.finalArray.count) aircraft", for: .normal)
+            button.setTitle("See \(ViewControllerFitler.finalArray.count) Aircraft", for: .normal)
         } else if ViewControllerFitler.finalArray.count == 0{
-            button.setTitle("No aircrafts with these attributes", for: .normal)
+            button.setTitle("No Matching Aircraft", for: .normal)
         }
     }
 
@@ -207,7 +210,7 @@ class ViewControllerFitler: UIViewController, UITableViewDataSource, UITableView
   
         //Initialize attributes min/max to first val in array
         let cruiseSpeed = aircraftArray[0].cruiseSpeed
-        let maxSpeed =  aircraftArray[0].maxSpeed
+        let maxSpeed = aircraftArray[0].maxSpeed
         let maxRangeInt = aircraftArray[0].maxRangeInt
         let maxRangeExt = aircraftArray[0].maxRangeExt
         let maxLoad = aircraftArray[0].maxLoad
@@ -237,7 +240,6 @@ class ViewControllerFitler: UIViewController, UITableViewDataSource, UITableView
         ViewControllerFitler.filterRangeArray.append(filters( filterName: "Landing Runway (ft)",setMin: landingRunway, setMax: landingRunway, curMin: landingRunway, curMax: landingRunway, aircraftArray: aircraftArray, isCleared: true))
         
         
-
     //these loops are to make sure the first value are not nullZ
         var count = 0
         for index in ViewControllerFitler.filterRangeArray {

@@ -45,7 +45,10 @@ class ViewControllerTable: UIViewController, UITableViewDataSource, UITableViewD
             let vc = segue.destination as! ViewControllerInfoCard
             vc.aircraft = self.infoCard
         }
-        
+//        if (segue.identifier == "homeSegue"){
+//            let vc = segue.destination as! ViewControllerHomePage
+//            vc.sentBack = true
+//        }
     }
     
     
@@ -236,8 +239,9 @@ class ViewControllerTable: UIViewController, UITableViewDataSource, UITableViewD
                 
                 
                 let attribute = [cruiseSpeed, maxSpeed, maxRangeInt, maxRangeExt, maxLoad, paxLitters, singleLoadCapacity, internalFuel, serviceCeiling, takeoffRunway, landingRunway]
+ 
             //Add each element of each child to Aircraft array
-                self.aircraftArray.append(Aircraft.init(modelNumber: modelNumber, commonName: commonName,otherName: otherName, cruiseSpeed: cruiseSpeed, maxSpeed: maxSpeed, maxRangeInt: maxRangeInt, maxRangeExt: maxRangeExt, maxLoad: maxLoad, crew: minCrew...maxCrew, paxSeated: paxSeatedMin...paxSeatedMax, paxLitters: paxLitters, singleLoadCapacity: singleLoadCapacity, internalFuel: internalFuel, serviceCeiling: serviceCeiling, inFlightRefuel: inFlightRefuel, takeoffRunway: takeoffRunway, landingRunway: landingRunway, photoURL: photoURL, verticalLift: verticalLift, attribute: attribute))
+                self.aircraftArray.append(Aircraft.init(modelNumber: modelNumber, commonName: commonName,otherName: otherName, cruiseSpeed: cruiseSpeed, maxSpeed: maxSpeed, maxRangeInt: maxRangeInt, maxRangeExt: maxRangeExt, maxLoad: maxLoad, crew: minCrew...maxCrew, paxSeated: paxSeatedMin...paxSeatedMax, paxLitters: paxLitters, singleLoadCapacity: singleLoadCapacity, internalFuel: internalFuel, serviceCeiling: serviceCeiling, inFlightRefuel: inFlightRefuel, takeoffRunway: takeoffRunway, landingRunway: landingRunway, photoURL: photoURL, verticalLift: verticalLift, attribute: attribute, commonInAllArrays: true, inRange: true))
                 self.currentAircraftArray = self.aircraftArray
             }
         }) { (error) in

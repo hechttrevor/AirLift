@@ -9,10 +9,13 @@
 import UIKit
 
 class ViewControllerHomePage: UIViewController {
-
+    
+    var aircraftArray = [Aircraft]()
     override func viewDidLoad() {
         super.viewDidLoad()
+        ViewControllerTable.isFiltered = false
         
     }
+    
     
 }

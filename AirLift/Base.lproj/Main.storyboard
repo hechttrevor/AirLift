@@ -606,6 +606,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="backgroundColor" translatesAutoresizingMaskIntoConstraints="NO" id="mjH-Il-Xf9">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UrC-Px-8Ut">
                                 <rect key="frame" x="16" y="25" width="17" height="23"/>
                                 <accessibility key="accessibilityConfiguration">
@@ -699,6 +703,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="backgroundColor" translatesAutoresizingMaskIntoConstraints="NO" id="xvH-iI-hUP">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qzv-kw-LO4">
                                 <rect key="frame" x="16" y="25" width="17" height="23"/>
                                 <accessibility key="accessibilityConfiguration">
@@ -804,7 +812,7 @@
                                 <constraints>
                                     <constraint firstAttribute="width" constant="200" id="o5t-4m-CFr"/>
                                 </constraints>
-                                <state key="normal" title="Aircrafts">
+                                <state key="normal" title="Aircraft">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
@@ -1242,9 +1250,9 @@
         <image name="backgroundColor" width="536" height="536"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="5rU-hF-U6s"/>
+        <segue reference="uaS-XT-BZL"/>
         <segue reference="qi0-3s-c3j"/>
         <segue reference="oYl-aK-OZS"/>
-        <segue reference="Fpb-OO-Pr4"/>
+        <segue reference="2IA-57-dAv"/>
     </inferredMetricsTieBreakers>
 </document>
