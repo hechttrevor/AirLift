@@ -3,109 +3,109 @@
     {
       "size" : "20x20",
       "idiom" : "iphone",
-      "filename" : "RescueAppIcon40.png",
+      "filename" : "AirLiftAppIcon40.png",
       "scale" : "2x"
     },
     {
       "size" : "20x20",
       "idiom" : "iphone",
-      "filename" : "RescueAppIcon60.png",
+      "filename" : "AirLiftAppIcon60.png",
       "scale" : "3x"
     },
     {
       "size" : "29x29",
       "idiom" : "iphone",
-      "filename" : "RescueAppIcon58-1.png",
+      "filename" : "AirLiftAppIcon58.png",
       "scale" : "2x"
     },
     {
       "size" : "29x29",
       "idiom" : "iphone",
-      "filename" : "RescueAppIcon87.png",
+      "filename" : "AirLiftAppIcon87.png",
       "scale" : "3x"
     },
     {
       "size" : "40x40",
       "idiom" : "iphone",
-      "filename" : "RescueAppIcon80-1.png",
+      "filename" : "AirLiftAppIcon80.png",
       "scale" : "2x"
     },
     {
       "size" : "40x40",
       "idiom" : "iphone",
-      "filename" : "RescueAppIcon120.png",
+      "filename" : "AirLiftAppIcon120-1.png",
       "scale" : "3x"
     },
     {
       "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "RescueAppIcon120-1.png",
+      "filename" : "AirLiftAppIcon120.png",
       "scale" : "2x"
     },
     {
       "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "RescueAppIcon180.png",
+      "filename" : "AirLiftAppIcon180.png",
       "scale" : "3x"
     },
     {
       "size" : "20x20",
       "idiom" : "ipad",
-      "filename" : "RescueAppIcon20.png",
+      "filename" : "AirLiftAppIcon20.png",
       "scale" : "1x"
     },
     {
       "size" : "20x20",
       "idiom" : "ipad",
-      "filename" : "RescueAppIcon40-1.png",
+      "filename" : "AirLiftAppIcon40-1.png",
       "scale" : "2x"
     },
     {
       "size" : "29x29",
       "idiom" : "ipad",
-      "filename" : "RescueAppIcon29.png",
+      "filename" : "AirLiftAppIcon29.png",
       "scale" : "1x"
     },
     {
       "size" : "29x29",
       "idiom" : "ipad",
-      "filename" : "RescueAppIcon58.png",
+      "filename" : "AirLiftAppIcon58-1.png",
       "scale" : "2x"
     },
     {
       "size" : "40x40",
       "idiom" : "ipad",
-      "filename" : "RescueAppIcon40-2.png",
+      "filename" : "AirLiftAppIcon40-2.png",
       "scale" : "1x"
     },
     {
       "size" : "40x40",
       "idiom" : "ipad",
-      "filename" : "RescueAppIcon80.png",
+      "filename" : "AirLiftAppIcon80-1.png",
       "scale" : "2x"
     },
     {
       "size" : "76x76",
       "idiom" : "ipad",
-      "filename" : "RescueAppIcon76.png",
+      "filename" : "AirLiftAppIcon76.png",
       "scale" : "1x"
     },
     {
       "size" : "76x76",
       "idiom" : "ipad",
-      "filename" : "RescueAppIcon152.png",
+      "filename" : "AirLiftAppIcon152.png",
       "scale" : "2x"
     },
     {
       "size" : "83.5x83.5",
       "idiom" : "ipad",
-      "filename" : "RescueAppIcon167.png",
+      "filename" : "AirLiftAppIcon167.png",
       "scale" : "2x"
     },
     {
       "size" : "1024x1024",
       "idiom" : "ios-marketing",
-      "filename" : "RescueAppIcon1024.png",
+      "filename" : "AirLiftAppIcon1024.png",
       "scale" : "1x"
     }
   ],

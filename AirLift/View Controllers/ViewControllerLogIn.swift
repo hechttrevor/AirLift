@@ -14,9 +14,11 @@ class ViewControllerLogIn: UIViewController {
     let backgroundImageView = UIImageView()
     @IBOutlet weak var emailTF: UITextField!
     @IBOutlet weak var passwordTF: UITextField!
+    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        loadingIndicator.isHidden = true
         setBackground()
         setUpTextFields()
     }
@@ -25,22 +27,30 @@ class ViewControllerLogIn: UIViewController {
     }
     
     @IBAction func loginConfirmation(_ sender: Any) {
+        //start loading animator button
+        self.loadingIndicator.isHidden = false
+        self.loadingIndicator.startAnimating()
+        
         //make sure textFields are valid
         guard let email = emailTF.text, let password = passwordTF.text
             else{
                 showAlert(title: "Invalid", message: "Must fill out each field")
+                self.loadingIndicator.isHidden = true
+                self.loadingIndicator.stopAnimating()
                 return
         }
+
         
         //Firebase auth checks the email and password
         Auth.auth().signIn(withEmail: email, password: password, completion: { (user, error) in
             if error != nil {
                 self.showAlert(title: "Error", message: "\(String(describing: error))")
+                self.loadingIndicator.isHidden = true
+                self.loadingIndicator.stopAnimating()
                 return
             }
             //Login successful, takes you to main page
             //self.showAlert(title: "Success", message: "You have been logged in")
-            
             if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "vcHome") as? ViewControllerHomePage {
                 self.present(vc, animated: true, completion: nil)
             }

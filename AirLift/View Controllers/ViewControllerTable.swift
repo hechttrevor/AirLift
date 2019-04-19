@@ -55,20 +55,29 @@ class ViewControllerTable: UIViewController, UITableViewDataSource, UITableViewD
 //FLOATING BUTTONS SET UP ************************************************************************************************
     func setFloatingButtons(){
     //backButton set up
-        let backButton = UIButton(frame: CGRect(origin: CGPoint(x: self.view.frame.width/2 - 75, y: self.view.frame.height - 50), size: CGSize(width: 75, height: 35)))
-        backButton.setTitle("Back", for: .normal)
+        let backButton = UIButton(frame: CGRect(origin: CGPoint(x: self.view.frame.width/2 - 90, y: self.view.frame.height - 50), size: CGSize(width: 90, height: 35)))
+        backButton.setTitle("Home", for: .normal)
         backButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
         backButton.backgroundColor = UIColor(red: 20/255, green: 110/255, blue: 230/255, alpha: 1)
         backButton.layer.borderWidth = 2
         backButton.layer.borderColor = UIColor.white.cgColor
         
+        backButton.imageEdgeInsets = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 10)
+        backButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        backButton.setImage(UIImage.init(named: "BackButtonWhite"), for: .normal)
+        
     //filterButton set up
-        let filterButton = UIButton(frame: CGRect(origin: CGPoint(x: self.view.frame.width/2 , y: self.view.frame.height - 50), size: CGSize(width: 75, height: 35)))
+        let filterButton = UIButton(frame: CGRect(origin: CGPoint(x: self.view.frame.width/2 , y: self.view.frame.height - 50), size: CGSize(width: 100, height: 35)))
         filterButton.setTitle("Filters", for: .normal)
         filterButton.addTarget(self, action: #selector(filterAction), for: .touchUpInside)
         filterButton.backgroundColor = UIColor(red: 20/255, green: 110/255, blue: 230/255, alpha: 1)
         filterButton.layer.borderWidth = 2
         filterButton.layer.borderColor = UIColor.white.cgColor
+        filterButton.imageEdgeInsets = UIEdgeInsets(top: 7.5, left: 7.5, bottom: 7.5, right: 50)
+        filterButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        filterButton.setImage(UIImage.init(named: "Filter30"), for: .normal)
+
+        
         
         
         self.navigationController?.view.addSubview(backButton)
@@ -181,15 +190,23 @@ class ViewControllerTable: UIViewController, UITableViewDataSource, UITableViewD
     }
 //ALERT for onClick cell
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        showAlertYesNo(title: "Selected Aircraft", message: "View the model: \(aircraftArray[indexPath.row].modelNumber)?", row: indexPath.row)
+        //without filter
+        if !ViewControllerTable.isFiltered{
+            showAlertYesNo(title: "Selected Aircraft", message: "View the model: \(currentAircraftArray[indexPath.row].modelNumber)?", row: indexPath.row)
+        }else{
+            showAlertYesNo(title: "Selected Aircraft", message: "View the model: \(ViewControllerFitler.currentArray[indexPath.row].modelNumber)?", row: indexPath.row)
+        }
     }
     func showAlertYesNo(title : String, message: String, row: Int){
         let refreshAlert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
         //Click OK
         refreshAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction!) in
             //Open Segue with Aircraft Data
-            self.infoCard = self.aircraftArray[row]
+            if !ViewControllerTable.isFiltered {
+                self.infoCard = self.currentAircraftArray[row]
+            }else{
+                self.infoCard = ViewControllerFitler.currentArray[row]
+            }
             self.seg()
         }))
         refreshAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
@@ -238,11 +255,12 @@ class ViewControllerTable: UIViewController, UITableViewDataSource, UITableViewD
                 
                 
                 
-                let attribute = [cruiseSpeed, maxSpeed, maxRangeInt, maxRangeExt, maxLoad, paxLitters, singleLoadCapacity, internalFuel, serviceCeiling, takeoffRunway, landingRunway]
+                let attribute = [cruiseSpeed, maxSpeed, maxRangeInt, maxRangeExt, maxLoad, paxLitters, singleLoadCapacity, internalFuel, serviceCeiling, takeoffRunway, landingRunway, minCrew, paxSeatedMin]
  
             //Add each element of each child to Aircraft array
-                self.aircraftArray.append(Aircraft.init(modelNumber: modelNumber, commonName: commonName,otherName: otherName, cruiseSpeed: cruiseSpeed, maxSpeed: maxSpeed, maxRangeInt: maxRangeInt, maxRangeExt: maxRangeExt, maxLoad: maxLoad, crew: minCrew...maxCrew, paxSeated: paxSeatedMin...paxSeatedMax, paxLitters: paxLitters, singleLoadCapacity: singleLoadCapacity, internalFuel: internalFuel, serviceCeiling: serviceCeiling, inFlightRefuel: inFlightRefuel, takeoffRunway: takeoffRunway, landingRunway: landingRunway, photoURL: photoURL, verticalLift: verticalLift, attribute: attribute, commonInAllArrays: true, inRange: true))
+                self.aircraftArray.append(Aircraft.init(modelNumber: modelNumber, commonName: commonName,otherName: otherName, cruiseSpeed: cruiseSpeed, maxSpeed: maxSpeed, maxRangeInt: maxRangeInt, maxRangeExt: maxRangeExt, maxLoad: maxLoad, crew: minCrew...maxCrew, paxSeated: paxSeatedMin...paxSeatedMax, paxLitters: paxLitters, singleLoadCapacity: singleLoadCapacity, internalFuel: internalFuel, serviceCeiling: serviceCeiling, inFlightRefuel: inFlightRefuel, takeoffRunway: takeoffRunway, landingRunway: landingRunway, photoURL: photoURL, verticalLift: verticalLift, attribute: attribute))
                 self.currentAircraftArray = self.aircraftArray
+                self.table.reloadData()
             }
         }) { (error) in
             print(error.localizedDescription)

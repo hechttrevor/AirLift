@@ -20,6 +20,7 @@
 		260D424D224D776D008B8AC4 /* ViewControllerSignUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260D424C224D776D008B8AC4 /* ViewControllerSignUp.swift */; };
 		260D424F224D7B07008B8AC4 /* TextFieldLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260D424E224D7B07008B8AC4 /* TextFieldLogin.swift */; };
 		260D4251224DA230008B8AC4 /* ViewControllerHomePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260D4250224DA230008B8AC4 /* ViewControllerHomePage.swift */; };
+		2616FC59226902CF005FE573 /* TableViewCellBoolFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2616FC58226902CF005FE573 /* TableViewCellBoolFilter.swift */; };
 		26CFA577224EC48B00F9299E /* ViewControllerTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CFA575224EC48B00F9299E /* ViewControllerTable.swift */; };
 		26CFA57C224ECF5500F9299E /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CFA57B224ECF5500F9299E /* TableViewCell.swift */; };
 		26CFA57E224F328100F9299E /* ViewControllerFitler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CFA57D224F328100F9299E /* ViewControllerFitler.swift */; };
@@ -60,6 +61,7 @@
 		260D424C224D776D008B8AC4 /* ViewControllerSignUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerSignUp.swift; sourceTree = "<group>"; };
 		260D424E224D7B07008B8AC4 /* TextFieldLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldLogin.swift; sourceTree = "<group>"; };
 		260D4250224DA230008B8AC4 /* ViewControllerHomePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerHomePage.swift; sourceTree = "<group>"; };
+		2616FC58226902CF005FE573 /* TableViewCellBoolFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCellBoolFilter.swift; sourceTree = "<group>"; };
 		26CFA575224EC48B00F9299E /* ViewControllerTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerTable.swift; sourceTree = "<group>"; };
 		26CFA57B224ECF5500F9299E /* TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		26CFA57D224F328100F9299E /* ViewControllerFitler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerFitler.swift; sourceTree = "<group>"; };
@@ -157,6 +159,7 @@
 				260D4248224C364A008B8AC4 /* ViewControllerInfoCard.swift */,
 				26CFA57D224F328100F9299E /* ViewControllerFitler.swift */,
 				26CFA5812253D82200F9299E /* TableViewCellSlider.swift */,
+				2616FC58226902CF005FE573 /* TableViewCellBoolFilter.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -371,6 +374,7 @@
 				260D4239224C2BF3008B8AC4 /* RoundButtonMain.swift in Sources */,
 				260D424D224D776D008B8AC4 /* ViewControllerSignUp.swift in Sources */,
 				260D4244224C2C11008B8AC4 /* Aircraft.swift in Sources */,
+				2616FC59226902CF005FE573 /* TableViewCellBoolFilter.swift in Sources */,
 				260D4216224C2A59008B8AC4 /* AppDelegate.swift in Sources */,
 				26CFA57E224F328100F9299E /* ViewControllerFitler.swift in Sources */,
 				26CFA5822253D82200F9299E /* TableViewCellSlider.swift in Sources */,
